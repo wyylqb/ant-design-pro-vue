@@ -9,8 +9,78 @@ export const asyncRouterMap = [
     name: 'index',
     component: BasicLayout,
     meta: { title: '首页' },
-    redirect: '/dashboard/workplace',
+    // redirect: '/dashboard/workplace',
+    redirect: '/users/userInfo',
     children: [
+
+      // user
+      {
+        path: '/users',
+        name: 'users',
+        component: PageView,
+        redirect: '/users/userInfo',
+        meta: { title: '用户管理', icon: 'user', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/users/userInfo/:pageNo([1-9]\\d*)?',
+            name: 'UserInfo',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/users/UserInfo'),
+            meta: { title: '用户信息', keepAlive: true, permission: [ 'table' ] }
+          }
+        ]
+      },
+      // component
+      {
+        path: '/component',
+        name: 'component',
+        component: PageView,
+        redirect: '/component/componentInfo',
+        meta: { title: '组件管理', icon: 'slack', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/component/componentInfo/:pageNo([1-9]\\d*)?',
+            name: 'ComponentInfo',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/component/ComponentInfo'),
+            meta: { title: '组件信息', keepAlive: true, permission: [ 'table' ] }
+          }
+        ]
+      },
+      // log
+      {
+        path: '/log',
+        name: 'log',
+        component: PageView,
+        redirect: '/log/logInfo',
+        meta: { title: '日志管理', icon: 'form', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/log/logInfo/:pageNo([1-9]\\d*)?',
+            name: 'LogInfo',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/log/LogInfo'),
+            meta: { title: '日志信息', keepAlive: true, permission: [ 'table' ] }
+          }
+        ]
+      },
+      // classification
+      // {
+      //   path: '/classification',
+      //   name: 'classification',
+      //   component: PageView,
+      //   redirect: '/classification/classificationInfo',
+      //   meta: { title: '分类管理', icon: 'table', permission: [ 'table' ] },
+      //   children: [
+      //     {
+      //       path: '/classification/classificationInfo/:pageNo([1-9]\\d*)?',
+      //       name: 'ClassificationInfo',
+      //       hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+      //       component: () => import('@/views/classification/ClassificationInfo'),
+      //       meta: { title: '分类信息', keepAlive: true, permission: [ 'table' ] }
+      //     }
+      //   ]
+      // },
       // dashboard
       {
         path: '/dashboard',

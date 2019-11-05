@@ -11,6 +11,26 @@ const api = {
 
 export default api
 
+//get
+export function getAction(url,parameter) {
+  return axios({
+    url: url,
+    method: 'get',
+    params: parameter
+  })
+}
+
+//put
+export function putAction(url,parameter) {
+  return axios({
+    url: url,
+    method:'put',
+    data: parameter
+  })
+}
+
+
+
 export function getUserList (parameter) {
   return axios({
     url: api.user,
