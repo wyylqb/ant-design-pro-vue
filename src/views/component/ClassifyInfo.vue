@@ -50,7 +50,7 @@
         </template>
       </a-col>
     </div>
-    <classify-modal ref="classifyModal" @ok="loadTree"></classify-modal>
+    <!--<classify-modal ref="classifyModal" @ok="loadTree"></classify-modal>-->
   </a-card>
 </template>
 <script>
@@ -61,21 +61,21 @@ import {httpAction, deleteAction} from '@/api/manage'
 import {JeecgListMixin} from '@/mixins/JeecgListMixin'
 // 表头
 const columns = [
-  {
-    title: '分类名称',
-    dataIndex: 'termName'
-  },
-  {
-    title: '分类类型',
-    align: 'center',
-    dataIndex: 'level'
-  },
-  {
-    title: '操作',
-    align: 'center',
-    dataIndex: 'action',
-    scopedSlots: {customRender: 'action'}
-  }
+  // {
+  //   title: '分类名称',
+  //   dataIndex: 'termName'
+  // },
+  // {
+  //   title: '分类类型',
+  //   align: 'center',
+  //   dataIndex: 'level'
+  // },
+  // {
+  //   title: '操作',
+  //   align: 'center',
+  //   dataIndex: 'action',
+  //   scopedSlots: {customRender: 'action'}
+  // }
 ]
 export default {
   name: 'ClassifyInfo',   //替代DepartList
@@ -125,7 +125,7 @@ export default {
         mobile: {rules: [{validator: this.validateMobile}]}
       },
       url: {
-        queryTerms:'/component/showTerms',
+        //queryTerms:'/component/showTerms',
         delete: '/sys/sysDepart/delete',
         edit: '/sys/sysDepart/edit',
         deleteBatch: '/sys/sysDepart/deleteBatch',
@@ -144,6 +144,7 @@ export default {
       this.refresh();
     },
     loadTree() {
+      // console.log("aa");   //有值
       var that = this
       that.treeData = []
       that.classifyTree = []

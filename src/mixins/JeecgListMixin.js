@@ -102,9 +102,10 @@ export const JeecgListMixin = {
         this.ipagination.current = 1;
       }
       var params = this.getQueryParams();//查询条件
+    //  console.log(params);
       this.loading = true;
       postAction(this.url.query, params).then((res) => {
-        console.log(res.length);
+      //  console.log(res);
         //if (res.success) {
         this.dataSource = res;
         //把时间戳转为时间
@@ -113,14 +114,10 @@ export const JeecgListMixin = {
           this.dataSource[i].createTime = this.$moment(timestamp).format('YYYY-MM-DD hh:mm:ss');
         }
         this.ipagination.total = res.length;
-
-        //   }
-        // if(res.code===510){
-        //   this.$message.warning(res.message)
-        // }
         this.loading = false;
       })
     },
+
     initDictConfig() {
       console.log("--这是一个假的方法!")
     },
@@ -167,6 +164,16 @@ export const JeecgListMixin = {
     searchQuery() {
       // this.loadData(1);
       this.loadQueryData(1);
+    },
+    // loadExport(){
+    //   if(this.url.exportUrl){
+    //     return
+    //   }
+    // },
+    export() {
+      // this.loadData(1);
+      //this.loadQueryData(1);
+      this.handleExportXls();
     },
     superQuery() {
       this.$refs.superQueryModal.show();
@@ -248,28 +255,34 @@ export const JeecgListMixin = {
       let url = `${window._CONFIG['domianURL']}/${this.url.exportXlsUrl}?paramsStr=${paramsStr}`;
       window.location.href = url;
     },
+
     handleExportXls(fileName){
       if(!fileName || typeof fileName != "string"){
         fileName = "导出文件"
       }
-      let param = {...this.queryParam};
-      if(this.selectedRowKeys && this.selectedRowKeys.length>0){
-        param['selections'] = this.selectedRowKeys.join(",")
-      }
+      var param = this.getQueryParams();//查询条件
+     // let param = {...this.queryParam};
+     //  if(this.selectedRowKeys && this.selectedRowKeys.length>0){
+     //    param['selections'] = this.selectedRowKeys.join(",")
+     //  }
       console.log("导出参数",param)
-      downFile(this.url.exportXlsUrl,param).then((data)=>{
-        if (!data) {
-          this.$message.warning("文件下载失败")
-          return
-        }
+      downFile(this.url.exportUrl,param).then((data)=>{
+        // console.log("qqq");
+        // console.log(data);
+        // if (!data) {
+        //   this.$message.warning("文件下载失败")
+        //   return
+        // }
         if (typeof window.navigator.msSaveBlob !== 'undefined') {
-          window.navigator.msSaveBlob(new Blob([data]), fileName+'.xls')
+          // window.navigator.msSaveBlob(new Blob([data]), fileName+'.xls')
+          window.navigator.msSaveBlob(new Blob([data]), fileName)
         }else{
           let url = window.URL.createObjectURL(new Blob([data]))
           let link = document.createElement('a')
           link.style.display = 'none'
           link.href = url
-          link.setAttribute('download', fileName+'.xls')
+          // link.setAttribute('download', fileName+'.xls')
+          link.setAttribute('download', fileName)
           document.body.appendChild(link)
           link.click()
           document.body.removeChild(link); //下载完成移除元素

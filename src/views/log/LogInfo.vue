@@ -29,6 +29,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="download" @click="handleExportXls('日志')">导出</a-button>
+      <!--<a-button :href="exportLog" type="primary" icon="download">导出</a-button>-->
     </div>
 
     <div>
@@ -85,7 +86,8 @@ export default {
         list: '/Component/log/showLogs',
         delete: '/Component/user/deleteUser',
         query: '/Component/log/showLogsByTime',
-        exportXlsUrl: "/Component/log/exportLogs",
+        exportUrl: `/Component/log/exportLogs`,
+        // exportXlsUrl: "/Component/log/exportLogs",
       }
     }
   },
@@ -96,7 +98,7 @@ export default {
   },
   methods: {
     handleQueryByTime() {
-      console.log(this.queryParam.dateTime1,this.queryParam.dateTime2)
+      // console.log(this.queryParam.dateTime1,this.queryParam.dateTime2)
       if ( typeof this.queryParam.dateTime1 == 'undefined' || typeof this.queryParam.dateTime2 == 'undefined') {
         this.$info({
           title: '提示',
@@ -104,6 +106,22 @@ export default {
         })
       } else {
         this.searchQuery()
+      }
+    },
+    exportLog() {
+      var dateTime1 = this.queryParam.dateTime1;
+      var dateTime2 = this.queryParam.dateTime2;
+     // return ("http://" + "10.69.36.118" +":8080/Component/log/exportLogs?dateTime1=" + dateTime1 + "&dateTime2=" + dateTime2);
+      // console.log(dateTime1);
+      // console.log(dateTime2);
+       // $("export").attr("href", "http://" + "10.69.36.118" +":8080/Component/log/exportLogs?dateTime1=" + dateTime1 + "&dateTime2=" + dateTime2);
+      if ( typeof dateTime1 == 'undefined' || typeof dateTime2 == 'undefined') {
+        this.$info({
+          title: '提示',
+          content: '查询日期不能为空'
+        })
+      } else {
+        this.export();
       }
     },
   }
