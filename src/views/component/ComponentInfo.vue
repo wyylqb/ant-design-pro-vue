@@ -361,11 +361,6 @@ const columns = [
     key: 'termName'
   },
   {
-    title: '组件类型',
-    dataIndex: 'termType',
-    key: 'termType'
-  },
-  {
     title: '操作',
     dataIndex: 'action',
     scopedSlots: { customRender: 'action' },

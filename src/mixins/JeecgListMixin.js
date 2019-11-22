@@ -4,7 +4,7 @@
  * data中url定义 list为查询列表  delete为删除单条记录  deleteBatch为批量删除
  */
 import { filterObj } from '@/utils/util';
-import { deleteAction, getAction,downFile } from '@/api/manage'
+import { deleteAction, getAction,downFile,postAction } from '@/api/manage'
 import Vue from 'vue'
 import { ACCESS_TOKEN } from "@/store/mutation-types"
 
@@ -74,6 +74,13 @@ export const JeecgListMixin = {
         console.log(res.length);
         //if (res.success) {
         this.dataSource = res;
+
+        //把时间戳转为时间
+        for (let i = 0; i < this.dataSource.length; i++) {
+          const timestamp = this.dataSource[i].createTime;
+          this.dataSource[i].createTime = this.$moment(timestamp).format('YYYY-MM-DD hh:mm:ss');
+        }
+
         this.ipagination.total = res.length;
         //   }
         // if(res.code===510){
@@ -82,6 +89,37 @@ export const JeecgListMixin = {
         this.loading = false;
       })
 
+    },
+    //按用户名查询
+    loadQueryData(arg) {
+      if (!this.url.query) {
+        /* eslint-disable */
+        this.$message.error("请设置url.query属性!");
+        return;
+      }
+      //加载数据 若传入参数1则加载第一页的内容
+      if (arg === 1) {
+        this.ipagination.current = 1;
+      }
+      var params = this.getQueryParams();//查询条件
+      this.loading = true;
+      postAction(this.url.query, params).then((res) => {
+        console.log(res.length);
+        //if (res.success) {
+        this.dataSource = res;
+        //把时间戳转为时间
+        for (let i = 0; i < this.dataSource.length; i++) {
+          const timestamp = this.dataSource[i].createTime;
+          this.dataSource[i].createTime = this.$moment(timestamp).format('YYYY-MM-DD hh:mm:ss');
+        }
+        this.ipagination.total = res.length;
+
+        //   }
+        // if(res.code===510){
+        //   this.$message.warning(res.message)
+        // }
+        this.loading = false;
+      })
     },
     initDictConfig() {
       console.log("--这是一个假的方法!")
@@ -127,7 +165,8 @@ export const JeecgListMixin = {
       this.selectionRows = [];
     },
     searchQuery() {
-      this.loadData(1);
+      // this.loadData(1);
+      this.loadQueryData(1);
     },
     superQuery() {
       this.$refs.superQueryModal.show();
@@ -143,24 +182,41 @@ export const JeecgListMixin = {
         return
       }
       var that = this;
-      deleteAction(that.url.delete, {id: id}).then((res) => {
-        if (res.success) {
-          that.$message.success(res.message);
+      postAction(that.url.delete, { userId: id }).then((res) => {
+        if (res.state >= 1) {
+          that.$message.success(res.msg);
           that.loadData();
         } else {
-          that.$message.warning(res.message);
+          that.$message.error(res.msg);
         }
       });
     },
+    //   deleteAction(that.url.delete, {id: id}).then((res) => {
+    //     if (res.success) {
+    //       that.$message.success(res.message);
+    //       that.loadData();
+    //     } else {
+    //       that.$message.warning(res.message);
+    //     }
+    //   });
+    // },
     handleEdit: function (record) {
       this.$refs.modalForm.edit(record);
       this.$refs.modalForm.title = "编辑";
       this.$refs.modalForm.disableSubmit = false;
+      this.$refs.modalForm.showPasswordBox = false;
     },
     handleAdd: function () {
       this.$refs.modalForm.add();
       this.$refs.modalForm.title = "新增";
       this.$refs.modalForm.disableSubmit = false;
+      this.$refs.modalForm.showPasswordBox = true;
+    },
+    handleUpdatePassword: function (record) {
+      this.$refs.modalForm.updatePassword(record);
+      this.$refs.modalForm.title = "修改密码";
+      this.$refs.modalForm.disableSubmit = false;
+      this.$refs.modalForm.showPasswordBox = true;
     },
     handleTableChange(pagination, filters, sorter) {
       //分页、排序、筛选变化时触发
@@ -183,6 +239,7 @@ export const JeecgListMixin = {
       this.$refs.modalForm.edit(record);
       this.$refs.modalForm.title = "详情";
       this.$refs.modalForm.disableSubmit = false;
+      this.$refs.modalForm.disableSubmit = true;
     },
 
     /* 导出 */

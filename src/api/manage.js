@@ -6,7 +6,12 @@ const api = {
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
-  orgTree: '/org/tree'
+  orgTree: '/org/tree',
+
+  //doraemonHC 添加
+  //按用户名查询用户
+  queryUsers: '/user/user_info_by_key',
+
 }
 
 export default api
@@ -29,7 +34,22 @@ export function putAction(url,parameter) {
   })
 }
 
+//post
+export function postAction(url, parameter) {
+  return axios({
+    url: url,
+    method: 'post',
+    data: parameter
+  })
+}
 
+export function downFile(url,parameter){
+  return axios({
+    url:url,
+    method:'post',
+    data:parameter
+  })
+}
 
 export function getUserList (parameter) {
   return axios({
@@ -78,5 +98,14 @@ export function saveService (parameter) {
     url: api.service,
     method: parameter.id === 0 ? 'post' : 'put',
     data: parameter
+  })
+}
+
+//doraemonHC 添加
+export function getUsersByKey(parameter) {
+  return axios({
+    url: api.queryUsers,
+    method: 'get',
+    params: parameter
   })
 }

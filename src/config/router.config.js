@@ -35,9 +35,16 @@ export const asyncRouterMap = [
         path: '/component',
         name: 'component',
         component: PageView,
-        redirect: '/component/componentInfo',
+        redirect: '/component/classifyInfo',
         meta: { title: '组件管理', icon: 'slack', permission: [ 'table' ] },
         children: [
+          {
+            path: '/component/classifyInfo/:pageNo([1-9]\\d*)?',
+            name: 'ClassifyInfo',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/component/ClassifyInfo'),
+            meta: { title: '分类信息', keepAlive: true, permission: [ 'table' ] }
+          },
           {
             path: '/component/componentInfo/:pageNo([1-9]\\d*)?',
             name: 'ComponentInfo',

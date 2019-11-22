@@ -8,37 +8,16 @@
 
           <a-col :md="10" :sm="12">
             <a-form-item label="创建时间" :labelCol="{span: 5}" :wrapperCol="{span: 18, offset: 1}">
-              <j-date v-model="queryParam.createTime_begin" :showTime="true" date-format="YYYY-MM-DD HH:mm:ss" style="width:45%" placeholder="请选择开始时间" ></j-date>
+              <j-date v-model="queryParam.dateTime1" :showTime="true" date-format="YYYY-MM-DD" style="width:45%" placeholder="请选择开始时间" ></j-date>
               <span style="width: 10px;">~</span>
-              <j-date v-model="queryParam.createTime_end" :showTime="true" date-format="YYYY-MM-DD HH:mm:ss" style="width:45%" placeholder="请选择结束时间"></j-date>
+              <j-date v-model="queryParam.dateTime2" :showTime="true" date-format="YYYY-MM-DD" style="width:45%" placeholder="请选择结束时间"></j-date>
             </a-form-item>
           </a-col>
 
-          <!--<a-col :md="8" :sm="8">-->
-            <!--<a-form-item-->
-              <!--:labelCol="labelCol"-->
-              <!--:wrapperCol="wrapperCol"-->
-              <!--label="开始时间">-->
-              <!--<a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'createTime', {}]" />-->
-            <!--</a-form-item>-->
-          <!--</a-col>-->
-          <!--<a-col :md="8" :sm="8">-->
-            <!--<a-form-item-->
-              <!--:labelCol="labelCol"-->
-              <!--:wrapperCol="wrapperCol"-->
-              <!--label="结束时间">-->
-              <!--<a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'createTime', {}]" />-->
-            <!--</a-form-item>-->
-          <!--</a-col>-->
-          <!--<a-col :md="6" :sm="8" >-->
-            <!--<span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">-->
-              <!--<a-button type="primary" @click="searchQuery" icon="search">查询日志</a-button>-->
-              <!--<a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>-->
-            <!--</span>-->
-          <!--</a-col>-->
+
           <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
             <a-col :md="6" :sm="24">
-              <a-button type="primary" @click="searchQuery">查询</a-button>
+              <a-button type="primary" @click="handleQueryByTime">查询</a-button>
               <a-button style="margin-left: 8px" @click="searchReset">重置</a-button>
             </a-col>
           </span>
@@ -70,12 +49,12 @@
     <!-- table区域-end -->
 
     <!-- 表单区域 -->
-    <user-modal ref="modalForm" @ok="modalFormOk"></user-modal>
+
   </a-card>
 </template>
 
 <script>
-import LogModal from './modules/LogModal'
+//import LogModal from './modules/LogModal'
 import { JeecgListMixin } from '@/mixins/JeecgListMixin'
 import JDate from '@/components/jeecg/JDate'
 
@@ -83,7 +62,7 @@ export default {
   name: 'LogInfo',
   mixins: [JeecgListMixin],
   components: {
-    LogModal,
+  //  LogModal,
     JDate
   },
   data () {
@@ -105,6 +84,7 @@ export default {
       url: {
         list: '/Component/log/showLogs',
         delete: '/Component/user/deleteUser',
+        query: '/Component/log/showLogsByTime',
         exportXlsUrl: "/Component/log/exportLogs",
       }
     }
@@ -115,7 +95,17 @@ export default {
     // }
   },
   methods: {
-
+    handleQueryByTime() {
+      console.log(this.queryParam.dateTime1,this.queryParam.dateTime2)
+      if ( typeof this.queryParam.dateTime1 == 'undefined' || typeof this.queryParam.dateTime2 == 'undefined') {
+        this.$info({
+          title: '提示',
+          content: '查询日期不能为空'
+        })
+      } else {
+        this.searchQuery()
+      }
+    },
   }
 
 }

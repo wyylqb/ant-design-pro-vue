@@ -18,7 +18,7 @@ const queryUserRole = (params)=>getAction("/users/user/queryUserRole",params);
 const getUserList = (params)=>getAction("/users/user/list",params);
 const queryInsider=(params)=>getAction("/users/user/queryByFid")
 const frozenBatch = (params)=>putAction("/sys/user/frozenBatch",params);
-
+const updatePwd=(params)=>postAction("/Component/user/updatePassword",params);
 
 //权限管理
 const addPermission= (params)=>postAction("/sys/permission/add",params);
@@ -33,6 +33,9 @@ const queryPermissionsByUser = (params)=>getAction("/sys/permission/getUserPermi
 const loadAllRoleIds = (params)=>getAction("/sys/permission/loadAllRoleIds",params);
 const getPermissionRuleList = (params)=>getAction("/sys/permission/getPermRuleListByPermId",params);
 const queryPermissionRule = (params)=>getAction("/sys/permission/queryPermissionRule",params);
+
+//分类管理
+const queryTerms = (params)=>getAction("/component/showTerms",params);
 
 // 部门管理
 const queryDepartTreeList = (params)=>getAction("/sys/sysDepart/queryTreeList",params);
@@ -78,6 +81,7 @@ export {
   checkRoleCode,
   addUser,
   editUser,
+  updatePwd,
   queryUserRole,
   getUserList,
   queryInsider,
