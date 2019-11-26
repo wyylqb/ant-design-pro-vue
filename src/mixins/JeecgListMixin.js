@@ -119,7 +119,7 @@ export const JeecgListMixin = {
     },
 
     initDictConfig() {
-      console.log("--这是一个假的方法!")
+      // console.log("--这是一个假的方法!")
     },
     handleSuperQuery(arg) {
       //高级查询方法
@@ -165,14 +165,8 @@ export const JeecgListMixin = {
       // this.loadData(1);
       this.loadQueryData(1);
     },
-    // loadExport(){
-    //   if(this.url.exportUrl){
-    //     return
-    //   }
-    // },
+
     export() {
-      // this.loadData(1);
-      //this.loadQueryData(1);
       this.handleExportXls();
     },
     superQuery() {

@@ -29,7 +29,6 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="download" @click="handleExportXls('日志')">导出</a-button>
-      <!--<a-button :href="exportLog" type="primary" icon="download">导出</a-button>-->
     </div>
 
     <div>
@@ -87,7 +86,6 @@ export default {
         delete: '/Component/user/deleteUser',
         query: '/Component/log/showLogsByTime',
         exportUrl: `/Component/log/exportLogs`,
-        // exportXlsUrl: "/Component/log/exportLogs",
       }
     }
   },

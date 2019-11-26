@@ -12,6 +12,9 @@ const api = {
   //按用户名查询用户
   queryUsers: '/user/user_info_by_key',
 
+
+  queryTerms:`/component/showTerms`
+
 }
 
 export default api
@@ -109,3 +112,15 @@ export function getUsersByKey(parameter) {
     params: parameter
   })
 }
+
+
+export function queryTerm(parameter) {
+  return axios({
+    url: api.queryTerms,
+    method: 'get',
+    params: parameter
+  })
+}
+
+
+

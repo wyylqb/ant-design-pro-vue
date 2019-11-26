@@ -50,7 +50,7 @@
         </template>
       </a-col>
     </div>
-    <!--<classify-modal ref="classifyModal" @ok="loadTree"></classify-modal>-->
+    <classify-modal ref="classifyModal" @ok="loadTree"></classify-modal>
   </a-card>
 </template>
 <script>
@@ -130,14 +130,14 @@ export default {
         edit: '/sys/sysDepart/edit',
         deleteBatch: '/sys/sysDepart/deleteBatch',
         exportXlsUrl: "sys/sysDepart/exportXls",
-        importExcelUrl: "sys/sysDepart/importExcel",
+        // importExcelUrl: "sys/sysDepart/importExcel",
       },
     }
   },
   computed: {
-    importExcelUrl: function () {
-      return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-    }
+    // importExcelUrl: function () {
+    //   return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+    // }
   },
   methods: {
     loadData() {
@@ -145,24 +145,30 @@ export default {
     },
     loadTree() {
       // console.log("aa");   //有值
-      var that = this
-      that.treeData = []
-      that.classifyTree = []
+      var that = this;
+      that.treeData = [];
+      that.classifyTree = [];
+
       queryTerms().then((res) => {
-        console.log(res);
-        if (res.success) {
-          for (let i = 0; i < res.result.length; i++) {
-            let temp = res.result[i]
+      //  console.log(res);
+      //  if (res.success) {
+      //     for (let i = 0; i < res.result.length; i++) {
+          for (let i = 0; i < res.length; i++) {
+          //  let temp = res.result[i]
+            let temp = res[i]
+          //  console.log(temp)         //undefined
             that.treeData.push(temp)
             that.classifyTree.push(temp)
             that.setThisExpandedKeys(temp)
-            console.log(temp.id)
+          //  console.log(temp.termId)
           }
           this.loading = false
-        }
+       // }
       })
     },
     setThisExpandedKeys(node) {
+      console.log("aa");
+      console.log(node.children);
       if (node.children && node.children.length > 0) {
         this.iExpandedKeys.push(node.key)
         for (let a = 0; a < node.children.length; a++) {

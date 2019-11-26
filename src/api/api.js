@@ -35,7 +35,7 @@ const getPermissionRuleList = (params)=>getAction("/sys/permission/getPermRuleLi
 const queryPermissionRule = (params)=>getAction("/sys/permission/queryPermissionRule",params);
 
 //分类管理
-const queryTerms = (params)=>getAction("/component/showTerms",params);
+const queryTerms = (params)=>getAction("/Component/component/showTerms",params);
 
 // 部门管理
 const queryDepartTreeList = (params)=>getAction("/sys/sysDepart/queryTreeList",params);
@@ -87,7 +87,7 @@ export {
   queryInsider,
   queryall,
   frozenBatch,
-
+  queryTerms,
   getPermissionList,
   addPermission,
   editPermission,
