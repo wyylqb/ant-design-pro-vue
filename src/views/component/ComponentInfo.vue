@@ -1,133 +1,3 @@
-<!--<template>-->
-  <!--<a-card :bordered="false">-->
-
-    <!--&lt;!&ndash; 操作按钮区域 &ndash;&gt;-->
-    <!--<div class="table-operator">-->
-      <!--<a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>-->
-      <!--<a-button-->
-        <!--@click="batchDel"-->
-        <!--v-if="selectedRowKeys.length > 0"-->
-        <!--ghost-->
-        <!--type="primary"-->
-        <!--icon="delete">批量删除-->
-      <!--</a-button>-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash; table区域-begin &ndash;&gt;-->
-    <!--<div>-->
-
-      <!--<div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">-->
-        <!--<i class="anticon anticon-info-circle ant-alert-icon"></i>已选择&nbsp;<a style="font-weight: 600">{{-->
-        <!--selectedRowKeys.length }}</a>项&nbsp;&nbsp;-->
-        <!--<a style="margin-left: 24px" @click="onClearSelected">清空</a>-->
-      <!--</div>-->
-
-      <!--<a-table-->
-        <!--:columns="columns"-->
-        <!--size="middle"-->
-        <!--:pagination="false"-->
-        <!--:dataSource="dataSource"-->
-        <!--:loading="loading"-->
-        <!--:rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}">-->
-
-        <!--<span slot="action" slot-scope="text, record">-->
-          <!--<a @click="handleEdit(record)">编辑</a>-->
-
-          <!--<a-divider type="vertical"/>-->
-          <!--<a-dropdown>-->
-            <!--<a class="ant-dropdown-link">-->
-              <!--更多 <a-icon type="down"/>-->
-            <!--</a>-->
-            <!--<a-menu slot="overlay">-->
-              <!--<a-menu-item>-->
-                <!--<a href="javascript:;" @click="handleDetail(record)">详情</a>-->
-              <!--</a-menu-item>-->
-              <!--<a-menu-item>-->
-                <!--<a href="javascript:;" @click="handleAddSub(record)">添加子菜单</a>-->
-              <!--</a-menu-item>-->
-
-              <!--<a-menu-item>-->
-                <!--<a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
-                  <!--<a>删除</a>-->
-                <!--</a-popconfirm>-->
-              <!--</a-menu-item>-->
-            <!--</a-menu>-->
-          <!--</a-dropdown>-->
-        <!--</span>-->
-      <!--</a-table>-->
-
-    <!--</div>-->
-    <!--&lt;!&ndash; table区域-end &ndash;&gt;-->
-
-    <!--<component-modal ref="modalForm" @ok="modalFormOk"></component-modal>-->
-
-  <!--</a-card>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--import ComponentModal from './modules/ComponentModal'-->
-<!--// import { getPermissionList } from '@/api/api'-->
-<!--import { JeecgListMixin } from '@/mixins/JeecgListMixin'-->
-<!--// import JEllipsis from '@/components/jeecg/JEllipsis'-->
-
-<!--const columns = [-->
-  <!--{-->
-    <!--title: '组件名称',-->
-    <!--dataIndex: 'termName',-->
-    <!--key: 'termName'-->
-  <!--},-->
-  <!--{-->
-    <!--title: '操作',-->
-    <!--dataIndex: 'action',-->
-    <!--scopedSlots: { customRender: 'action' },-->
-    <!--align: 'center',-->
-    <!--width: 150-->
-  <!--}-->
-<!--]-->
-
-<!--export default {-->
-  <!--name: 'ComponentInfo',-->
-  <!--mixins: [JeecgListMixin],-->
-  <!--components: {-->
-    <!--ComponentModal-->
-  <!--},-->
-  <!--data() {-->
-    <!--return {-->
-      <!--description: '这是菜单管理页面',-->
-      <!--// 表头-->
-      <!--columns: columns,-->
-      <!--loading: false,-->
-      <!--url: {-->
-        <!--list: '/sys/permission/list',-->
-        <!--delete: '/sys/permission/delete',-->
-        <!--deleteBatch: '/sys/permission/deleteBatch'-->
-      <!--}-->
-    <!--}-->
-  <!--},-->
-  <!--methods: {-->
-    <!--loadData() {-->
-      <!--this.dataSource = []-->
-      <!--getPermissionList().then((res) => {-->
-        <!--if (res.success) {-->
-          <!--console.log(res.result)-->
-          <!--this.dataSource = res.result-->
-        <!--}-->
-      <!--})-->
-    <!--},-->
-
-    <!--handleAddSub(record) {-->
-      <!--this.$refs.modalForm.title = "添加子菜单";-->
-      <!--this.$refs.modalForm.localMenuType = 1;-->
-      <!--this.$refs.modalForm.disableSubmit = false;-->
-      <!--this.$refs.modalForm.edit({status:'1',permsType:'1',route:true,'parentId':record.id});-->
-    <!--}-->
-  <!--}-->
-<!--}-->
-<!--</script>-->
-<!--<style scoped>-->
-<!--</style>-->
-
-
 <template>
   <a-card :bordered="false">
     <!-- 查询区域 -->
@@ -187,9 +57,7 @@
         @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
           <a-divider type="vertical"/>
-
           <a-dropdown>
             <a class="ant-dropdown-link">
               更多 <a-icon type="down"/>
@@ -198,7 +66,6 @@
               <a-menu-item>
                 <a href="javascript:;" @click="handleDetail(record)">详情</a>
               </a-menu-item>
-
               <a-menu-item>
                 <a-popconfirm title="确定要删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
@@ -232,7 +99,7 @@ export default {
   },
   data() {
     return {
-      description: '组件信息',
+      // description: '组件信息',
       currentDeptId: '',
       // 表头
       columns: [
@@ -249,7 +116,7 @@ export default {
           width: 170
         }],
       url: {
-        list: "/sys/user/departUserList",      //查询某分类下有哪些组件
+        list: "/Component/component/showComByTerm ",      //查询某分类下有哪些组件
         edit: "/sys/user/editSysDepartWithUser", //编辑某分类下的某些组件
         delete: "/sys/user/deleteUserInDepart",
         deleteBatch: "/sys/user/deleteUserInDepartBatch",

@@ -46,10 +46,10 @@ export const asyncRouterMap = [
             meta: { title: '分类信息', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/component/componentInfo/:pageNo([1-9]\\d*)?',
-            name: 'ComponentInfo',
+            path: '/component/componentList/:pageNo([1-9]\\d*)?',
+            name: 'ComponentList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/component/ComponentInfo'),
+            component: () => import('@/views/component/ComponentList'),
             meta: { title: '组件信息', keepAlive: true, permission: [ 'table' ] }
           }
         ]

@@ -36,6 +36,8 @@ const queryPermissionRule = (params)=>getAction("/sys/permission/queryPermission
 
 //分类管理
 const queryTerms = (params)=>getAction("/Component/component/showTerms",params);
+const deleteByTermId = (params)=>getAction("/Component/component/deleteTermById",params);
+
 
 // 部门管理
 const queryDepartTreeList = (params)=>getAction("/sys/sysDepart/queryTreeList",params);
@@ -88,6 +90,7 @@ export {
   queryall,
   frozenBatch,
   queryTerms,
+  deleteByTermId,
   getPermissionList,
   addPermission,
   editPermission,

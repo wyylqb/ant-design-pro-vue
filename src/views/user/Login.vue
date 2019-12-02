@@ -45,8 +45,6 @@
         </a-tab-pane>
 
       </a-tabs>
-
-
       <a-form-item style="margin-top:24px">
         <a-button
           size="large"
@@ -57,9 +55,7 @@
           :disabled="state.loginBtn"
         >确定</a-button>
       </a-form-item>
-
     </a-form>
-
     <two-step-captcha
       v-if="requiredTwoStepCaptcha"
       :visible="stepCaptchaVisible"
@@ -134,11 +130,8 @@ export default {
         customActiveKey,
         Login
       } = this
-
       state.loginBtn = true
-
       const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha']
-
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
           console.log('login form', values)

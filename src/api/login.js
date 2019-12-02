@@ -12,20 +12,20 @@ import { axios } from '@/utils/request'
  * @param parameter
  * @returns {*}
  */
-// export function login (parameter) {
-//   return axios({
-//     url: '/auth/login',
-//     method: 'post',
-//     data: parameter
-//   })
-// }
 export function login (parameter) {
   return axios({
-    url: '/user/login',
+    url: '/auth/login',
     method: 'post',
     data: parameter
   })
 }
+// export function login (parameter) {
+//   return axios({
+//     url: '/user/login',
+//     method: 'post',
+//     data: parameter
+//   })
+// }
 
 export function getSmsCaptcha (parameter) {
   return axios({

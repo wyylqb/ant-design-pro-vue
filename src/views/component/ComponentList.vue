@@ -13,7 +13,7 @@
               :checkStrictly="true"
               @select="onSelect"
               :dropdownStyle="{maxHeight:'200px',overflow:'auto'}"
-              :treeData="departTree"
+              :treeData="classifyTree"
             />
           </template>
         </div>
@@ -33,7 +33,7 @@
 <script>
   // import DeptBaseInfo from './modules/DeptBaseInfo'
   import ComponentInfo from './ComponentInfo'
-  import {queryDepartTreeList, searchByKeywords} from '@/api/api'
+  import {queryTerms, searchByKeywords} from '@/api/api'
   import {JeecgListMixin} from '@/mixins/JeecgListMixin'
 
   export default {
@@ -45,7 +45,7 @@
     },
     data() {
       return {
-        currentDeptId: '',
+        currentClassifyId: '',
         iExpandedKeys: [],
         loading: false,
         autoExpandParent: true,
@@ -54,12 +54,12 @@
         disable: true,
         treeData: [],
         visible: false,
-        departTree: [],
+        classifyTree: [],
         rightClickSelectedKey: '',
         hiding: true,
         model: {},
         dropTrigger: '',
-        depart: {},
+        classify: {},
         disableSubmit: false,
         checkedKeys: [],
         selectedKeys: [],
@@ -90,18 +90,20 @@
       loadTree() {
         var that = this
         that.treeData = []
-        that.departTree = []
-        queryDepartTreeList().then((res) => {
-          if (res.success) {
-            for (let i = 0; i < res.result.length; i++) {
-              let temp = res.result[i]
+        that.classifyTree = []
+        queryTerms().then((res) => {
+          // if (res.success) {
+          for (let i = 0; i < res.length; i++) {
+            //   for (let i = 0; i < res.result.length; i++) {
+              let temp = res[i]
+              // let temp = res.result[i]
               that.treeData.push(temp)
-              that.departTree.push(temp)
+              that.classifyTree.push(temp)
               that.setThisExpandedKeys(temp)
               // console.log(temp.id)
             }
             this.loading = false
-          }
+          // }
         })
       },
       setThisExpandedKeys(node) {
@@ -118,9 +120,6 @@
       },
 
       onExpand(expandedKeys) {
-        // console.log('onExpand', expandedKeys)
-        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-        // or, you can remove all expanded children keys.
         this.iExpandedKeys = expandedKeys
         this.autoExpandParent = false
       },
@@ -129,15 +128,15 @@
         let that = this
         if (value) {
           searchByKeywords({keyWord: value}).then((res) => {
-            if (res.success) {
-              that.departTree = []
-              for (let i = 0; i < res.result.length; i++) {
-                let temp = res.result[i]
-                that.departTree.push(temp)
+            // if (res.success) {
+              that.classifyTree = []
+              for (let i = 0; i < res.length; i++) {
+                let temp = res[i]
+                that.classifyTree.push(temp)
               }
-            } else {
-              that.$message.warning(res.message)
-            }
+            // } else {
+            //   that.$message.warning(res.message)
+            // }
           })
         } else {
           that.loadTree()
@@ -149,17 +148,11 @@
         // console.log('onCheck', checkedKeys, e);
         this.checkedKeys = [];
         // if (e.checked === true) {
-        this.currentDeptId = record.id;
+        this.currentClassifyId = record.id;
         this.checkedKeys.push(record.id);
 
-        this.$refs.DeptBaseInfo.open(record);
-        this.$refs.DeptUserInfo.open(record);
-        // }
-        // else {
-        //   this.checkedKeys = [];
-        //   this.$refs.DeptBaseInfo.clearForm();
-        //   this.$refs.DeptUserInfo.clearList();
-        // }
+        // this.$refs.DeptBaseInfo.open(record);
+        this.$refs.ComponentInfo.open(record);
 
         this.hiding = false;
         // this.checkedKeys = checkedKeys.checked
@@ -170,9 +163,9 @@
         }
         let record = e.node.dataRef;
         this.checkedKeys.push(record.id);
-        this.$refs.DeptBaseInfo.open(record);
-        this.$refs.DeptUserInfo.onClearSelected();
-        this.$refs.DeptUserInfo.open(record);
+        // this.$refs.DeptBaseInfo.open(record);
+        this.$refs.ComponentInfo.onClearSelected();
+        this.$refs.ComponentInfo.open(record);
       },
     },
     created() {
@@ -183,5 +176,5 @@
   }
 </script>
 <style scoped>
-  @import '~@assets/less/common.less'
+  /*@import '~@assets/less/common.less'*/
 </style>

@@ -45,7 +45,23 @@ export function postAction(url, parameter) {
     data: parameter
   })
 }
+export function httpAction(url,parameter,method) {
+  return axios({
+    url: url,
+    method:method ,
+    data: parameter
+  })
+}
 
+//deleteAction
+export function deleteAction(url,parameter) {
+  return axios({
+    url: url,
+    method: 'post',
+    data: parameter
+    // params: parameter
+  })
+}
 export function downFile(url,parameter){
   return axios({
     url:url,

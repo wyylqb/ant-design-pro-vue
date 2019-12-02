@@ -5,12 +5,12 @@
     <a-row style="margin-left: 14px">
       <a-button @click="handleAdd(2)" type="primary">添加子分类</a-button>
       <a-button @click="handleAdd(1)" type="primary">添加一级分类</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('分类信息')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-      <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
-      <a-button title="删除多条数据" @click="batchDel" type="default">批量删除</a-button>
-      <!--<a-button @click="refresh" type="default" icon="reload" :loading="loading">刷新</a-button>-->
+      <!--<a-button type="primary" icon="download" @click="handleExportXls('分类信息')">导出</a-button>-->
+      <!--<a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
+      <!--<a-button type="primary" icon="import">导入</a-button>-->
+      <!--</a-upload>-->
+      <a-button title="删除数据" @click="handleDelete" type="default">删除</a-button>
+      <!--<a-button title="删除多条数据" @click="batchDel" type="default">批量删除</a-button>-->
     </a-row>
     <div style="background: #fff;padding-left:16px;height: 100%; margin-top: 5px">
       <a-alert type="info" :showIcon="true">
@@ -56,7 +56,7 @@
 <script>
 import ClassifyModal from './modules/ClassifyModal'
 import pick from 'lodash.pick'
-import {queryTerms, searchByKeywords, deleteByDepartId} from '@/api/api'
+import {queryTerms, searchByKeywords, deleteByTermId} from '@/api/api'
 import {httpAction, deleteAction} from '@/api/manage'
 import {JeecgListMixin} from '@/mixins/JeecgListMixin'
 // 表头
@@ -119,18 +119,18 @@ export default {
         nodes: [],
         edges: []
       },
-      validatorRules: {
-        departName: {rules: [{required: true, message: '请输入机构/部门名称!'}]},
-        orgCode: {rules: [{required: true, message: '请输入机构编码!'}]},
-        mobile: {rules: [{validator: this.validateMobile}]}
-      },
+      // validatorRules: {
+      //   departName: {rules: [{required: true, message: '请输入机构/部门名称!'}]},
+      //   orgCode: {rules: [{required: true, message: '请输入机构编码!'}]},
+      //   mobile: {rules: [{validator: this.validateMobile}]}
+      // },
       url: {
         //queryTerms:'/component/showTerms',
-        delete: '/sys/sysDepart/delete',
+        delete: '/Component/component/deleteTermById',
         edit: '/sys/sysDepart/edit',
-        deleteBatch: '/sys/sysDepart/deleteBatch',
-        exportXlsUrl: "sys/sysDepart/exportXls",
-        // importExcelUrl: "sys/sysDepart/importExcel",
+        // deleteBatch: '/sys/sysDepart/deleteBatch',
+        exportXlsUrl: "/Component/component/downCom",    //导出
+        importExcelUrl: "/Component/component/uploadComponent",  //导入
       },
     }
   },
@@ -150,26 +150,20 @@ export default {
       that.classifyTree = [];
 
       queryTerms().then((res) => {
-      //  console.log(res);
-      //  if (res.success) {
-      //     for (let i = 0; i < res.result.length; i++) {
+        console.log(res);
           for (let i = 0; i < res.length; i++) {
-          //  let temp = res.result[i]
+
             let temp = res[i]
-          //  console.log(temp)         //undefined
             that.treeData.push(temp)
             that.classifyTree.push(temp)
             that.setThisExpandedKeys(temp)
-          //  console.log(temp.termId)
           }
           this.loading = false
        // }
       })
     },
     setThisExpandedKeys(node) {
-      console.log("aa");
-      console.log(node.children);
-      if (node.children && node.children.length > 0) {
+           if (node.children && node.children.length > 0) {
         this.iExpandedKeys.push(node.key)
         for (let a = 0; a < node.children.length; a++) {
           this.setThisExpandedKeys(node.children[a])
@@ -183,11 +177,11 @@ export default {
     // 右键操作方法
     rightHandle(node) {
       this.dropTrigger = 'contextmenu'
-      console.log(node.node.eventKey)
+      // console.log(node.node.eventKey)
       this.rightClickSelectedKey = node.node.eventKey
     },
     onExpand(expandedKeys) {
-      console.log('onExpand', expandedKeys)
+       console.log('onExpand', expandedKeys)
       // if not set autoExpandParent to false, if children expanded, parent can not collapse.
       // or, you can remove all expanded children keys.
       this.iExpandedKeys = expandedKeys
@@ -209,28 +203,30 @@ export default {
     addRootNode() {
       this.$refs.nodeModal.add(this.currFlowId, '')
     },
-    batchDel: function () {
+    handleDelete: function () {
       console.log(this.checkedKeys)
       if (this.checkedKeys.length <= 0) {
         this.$message.warning('请选择一条记录！')
       } else {
-        var ids = ''
-        for (var a = 0; a < this.checkedKeys.length; a++) {
-          ids += this.checkedKeys[a] + ','
-        }
+        var id = this.checkedKeys[0];
+        // for (var a = 0; a < this.checkedKeys.length; a++) {
+        //   ids += this.checkedKeys[a] + ','
+        // }
         var that = this
         this.$confirm({
           title: '确认删除',
-          content: '确定要删除所选中的 ' + this.checkedKeys.length + ' 条数据，以及子节点数据吗?',
+          content: '确定要删除所选中的1条数据，以及子节点数据吗?',
+          // content: '确定要删除所选中的 ' + this.checkedKeys.length + ' 条数据，以及子节点数据吗?',
           onOk: function () {
-            deleteAction(that.url.deleteBatch, {ids: ids}).then((res) => {
-              if (res.success) {
-                that.$message.success(res.message)
-                that.loadTree()
-                that.onClearSelected()
-              } else {
-                that.$message.warning(res.message)
-              }
+            deleteAction(that.url.delete, {termId: id}).then((res) => {
+              console.log(res);
+              // if (res.success) {
+                that.$message.success("删除成功！");
+                that.loadTree();
+                that.onClearSelected();
+              // } else {
+              //   that.$message.warning(res.message)
+              // }
             })
           }
         })
@@ -240,15 +236,15 @@ export default {
       let that = this
       if (value) {
         searchByKeywords({keyWord: value}).then((res) => {
-          if (res.success) {
+          // if (res.success) {
             that.classifyTree = []
-            for (let i = 0; i < res.result.length; i++) {
-              let temp = res.result[i]
+            for (let i = 0; i < res.length; i++) {
+              let temp = res[i]
               that.classifyTree.push(temp)
             }
-          } else {
-            that.$message.warning(res.message)
-          }
+          // } else {
+          //   that.$message.warning(res.message)
+          // }
         })
       } else {
         that.loadTree()
@@ -270,17 +266,15 @@ export default {
       this.checkedKeys = checkedKeys.checked
     },
     onSelect(selectedKeys, e) {
-      console.log('selected', selectedKeys, e)
+      // console.log('selected', selectedKeys, e)
       this.hiding = false
       let record = e.node.dataRef
-      console.log('onSelect-record', record)
+      // console.log('onSelect-record', record)
       this.currSelected = Object.assign({}, record)
       this.model = this.currSelected
       this.selectedKeys = [record.key]
-      this.model.parentId = record.parentId
+      this.model.parId = record.parId
       // this.setValuesToForm(record)
-
-
     },
     // 触发onSelect事件时,为部门树右侧的form表单赋值
     // setValuesToForm(record) {
@@ -342,10 +336,13 @@ export default {
     },
     handleAdd(num) {
       if (num == 1) {
+      //  console.log("111");   //有值
         this.$refs.classifyModal.add()
         this.$refs.classifyModal.title = '新增'
       } else if (num == 2) {
-        let key = this.currSelected.key
+        console.log("222");   //有值
+         let key = this.currSelected.key
+        // console.log(this.currSelected.key);  //undefined
         if (!key) {
           this.$message.warning('请先选中一条记录!')
           return false
@@ -356,16 +353,6 @@ export default {
         this.$refs.classifyModal.add(this.rightClickSelectedKey)
         this.$refs.classifyModal.title = '新增'
       }
-    },
-    handleDelete() {
-      deleteByDepartId({id: this.rightClickSelectedKey}).then((resp) => {
-        if (resp.success) {
-          this.$message.success('删除成功!')
-          this.loadTree()
-        } else {
-          this.$message.warning('删除失败!')
-        }
-      })
     },
     selectDirectiveOk(record) {
       console.log('选中指令数据', record)
