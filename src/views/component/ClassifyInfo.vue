@@ -20,7 +20,7 @@
           <a v-if="this.currSelected.title" style="margin-left: 10px" @click="onClearSelected">取消选择</a>
         </div>
       </a-alert>
-      <a-input-search @search="onSearch" style="width:100%;margin-top: 10px" placeholder="请输入分类名称"/>
+      <!--<a-input-search @search="onSearch" style="width:100%;margin-top: 10px" placeholder="请输入分类名称"/>-->
       <!-- 树-->
       <a-col :md="10" :sm="24">
         <template>
@@ -152,7 +152,6 @@ export default {
       queryTerms().then((res) => {
         console.log(res);
           for (let i = 0; i < res.length; i++) {
-
             let temp = res[i]
             that.treeData.push(temp)
             that.classifyTree.push(temp)
@@ -163,7 +162,7 @@ export default {
       })
     },
     setThisExpandedKeys(node) {
-           if (node.children && node.children.length > 0) {
+      if (node.children && node.children.length > 0) {
         this.iExpandedKeys.push(node.key)
         for (let a = 0; a < node.children.length; a++) {
           this.setThisExpandedKeys(node.children[a])

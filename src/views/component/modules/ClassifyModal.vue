@@ -20,8 +20,8 @@
           hasFeedback >
           <a-input id="termName" placeholder="请输入分类名称" v-decorator="['termName', validatorRules.termName ]"/>
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上级分类" hasFeedback>
-        <!--<a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" :hidden="seen" label="上级分类" hasFeedback>-->
+        <!--<a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上级分类" hasFeedback>-->
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" :hidden="seen" label="上级分类" hasFeedback>
         <a-tree-select
           style="width:100%"
           :dropdownStyle="{maxHeight:'200px',overflow:'auto'}"

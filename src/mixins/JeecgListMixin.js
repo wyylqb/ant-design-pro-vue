@@ -90,6 +90,26 @@ export const JeecgListMixin = {
       })
 
     },
+    //根据关键字查询组件
+    loadCData(arg) {
+      if (!this.url.search) {
+        /* eslint-disable */
+        this.$message.error("请设置url.list属性!")
+        return
+      }
+      //加载数据 若传入参数1则加载第一页的内容
+      if (arg === 1) {
+        this.ipagination.current = 1;
+      }
+      var params = this.getQueryParams();//查询条件
+      this.loading = true;
+      postAction(this.url.search, params).then((res) => {
+        this.dataSource = res;
+        this.ipagination.total = res.length;
+        this.loading = false;
+      })
+
+    },
     //按用户名查询
     loadQueryData(arg) {
       if (!this.url.query) {
@@ -102,11 +122,8 @@ export const JeecgListMixin = {
         this.ipagination.current = 1;
       }
       var params = this.getQueryParams();//查询条件
-    //  console.log(params);
       this.loading = true;
       postAction(this.url.query, params).then((res) => {
-      //  console.log(res);
-        //if (res.success) {
         this.dataSource = res;
         //把时间戳转为时间
         for (let i = 0; i < this.dataSource.length; i++) {
@@ -135,10 +152,13 @@ export const JeecgListMixin = {
     getQueryParams() {
       //获取查询条件
       let sqp = {}
+       // console.log(sqp);
       if (this.superQueryParams) {
         sqp['superQueryParams'] = encodeURI(this.superQueryParams)
       }
       var param = Object.assign(sqp, this.queryParam, this.isorter, this.filters);
+      // console.log(param);
+      // console.log(param.field);
       param.field = this.getQueryField();
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
@@ -164,6 +184,10 @@ export const JeecgListMixin = {
     searchQuery() {
       // this.loadData(1);
       this.loadQueryData(1);
+    },
+    //根据关键字查询组件
+    searchC(){
+      this.loadCData(1);
     },
 
     export() {
@@ -255,22 +279,13 @@ export const JeecgListMixin = {
         fileName = "导出文件"
       }
       var param = this.getQueryParams();//查询条件
-     // let param = {...this.queryParam};
-     //  if(this.selectedRowKeys && this.selectedRowKeys.length>0){
-     //    param['selections'] = this.selectedRowKeys.join(",")
-     //  }
       console.log("导出参数",param)
       downFile(this.url.exportUrl,param).then((data)=>{
-        // console.log("qqq");
-        // console.log(data);
-        // if (!data) {
-        //   this.$message.warning("文件下载失败")
-        //   return
-        // }
+        console.log(data);
         if (typeof window.navigator.msSaveBlob !== 'undefined') {
-          // window.navigator.msSaveBlob(new Blob([data]), fileName+'.xls')
           window.navigator.msSaveBlob(new Blob([data]), fileName)
         }else{
+          console.log("wwww");
           let url = window.URL.createObjectURL(new Blob([data]))
           let link = document.createElement('a')
           link.style.display = 'none'
@@ -284,6 +299,30 @@ export const JeecgListMixin = {
         }
       })
     },
+
+    // handleExport(fileName){
+    //   if(!fileName || typeof fileName != "string"){
+    //     fileName = "导出文件"
+    //   }
+    //   var param = this.getQueryParams();//查询条件
+    //   console.log("导出参数",param)
+    //   downFile(this.url.export,param).then((data)=>{
+    //     if (typeof window.navigator.msSaveBlob !== 'undefined') {
+    //       window.navigator.msSaveBlob(new Blob([data]), fileName)
+    //     }else{
+    //       let url = window.URL.createObjectURL(new Blob([data]))
+    //       let link = document.createElement('a')
+    //       link.style.display = 'none'
+    //       link.href = url
+    //       // link.setAttribute('download', fileName+'.xls')
+    //       link.setAttribute('download', fileName)
+    //       document.body.appendChild(link)
+    //       link.click()
+    //       document.body.removeChild(link); //下载完成移除元素
+    //       window.URL.revokeObjectURL(url); //释放掉blob对象
+    //     }
+    //   })
+    // },
 
     /* 图片预览 */
     getImgView(text) {

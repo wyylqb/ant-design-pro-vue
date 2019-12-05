@@ -51,6 +51,13 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/component/ComponentList'),
             meta: { title: '组件信息', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/component/componentAudit/:pageNo([1-9]\\d*)?',
+            name: 'ComponentAudit',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/component/ComponentAudit'),
+            meta: { title: '组件审核', keepAlive: true, permission: [ 'table' ] }
           }
         ]
       },

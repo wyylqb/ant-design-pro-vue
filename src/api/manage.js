@@ -45,6 +45,7 @@ export function postAction(url, parameter) {
     data: parameter
   })
 }
+
 export function httpAction(url,parameter,method) {
   return axios({
     url: url,

@@ -3,7 +3,7 @@
     <a-col :md="8" :sm="24">
       <a-card :bordered="false">
         <div style="background: #fff;padding-left:16px;height: 100%; margin-top: 5px">
-          <a-input-search @search="onSearch" style="width:100%;margin-top: 10px" placeholder="请输入分类名称"/>
+          <!--<a-input-search @search="onSearch" style="width:100%;margin-top: 10px" placeholder="请输入分类名称"/>-->
           <!-- 树-->
           <template>
             <!--组织机构-->
@@ -45,7 +45,7 @@
     },
     data() {
       return {
-        currentClassifyId: '',
+        currentTermId: '',
         iExpandedKeys: [],
         loading: false,
         autoExpandParent: true,
@@ -145,10 +145,8 @@
       },
       onCheck(checkedKeys, e) {
         let record = e.node.dataRef;
-        // console.log('onCheck', checkedKeys, e);
         this.checkedKeys = [];
-        // if (e.checked === true) {
-        this.currentClassifyId = record.id;
+        this.currentTermId = record.id;
         this.checkedKeys.push(record.id);
 
         // this.$refs.DeptBaseInfo.open(record);
@@ -162,7 +160,11 @@
           this.selectedKeys = [selectedKeys[0]];
         }
         let record = e.node.dataRef;
-        this.checkedKeys.push(record.id);
+        // console.log("popopo");
+        //   console.log(record.termId);
+        // this.currentTermId = record.termId;
+        this.checkedKeys.push(record.termId);
+        sessionStorage.setItem('termId',record.termId);
         // this.$refs.DeptBaseInfo.open(record);
         this.$refs.ComponentInfo.onClearSelected();
         this.$refs.ComponentInfo.open(record);
