@@ -78,23 +78,26 @@ export const asyncRouterMap = [
           }
         ]
       },
-      // classification
-      // {
-      //   path: '/classification',
-      //   name: 'classification',
-      //   component: PageView,
-      //   redirect: '/classification/classificationInfo',
-      //   meta: { title: '分类管理', icon: 'table', permission: [ 'table' ] },
-      //   children: [
-      //     {
-      //       path: '/classification/classificationInfo/:pageNo([1-9]\\d*)?',
-      //       name: 'ClassificationInfo',
-      //       hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-      //       component: () => import('@/views/classification/ClassificationInfo'),
-      //       meta: { title: '分类信息', keepAlive: true, permission: [ 'table' ] }
-      //     }
-      //   ]
-      // },
+
+      // userCenter
+      {
+        path: '/userCenter',
+        name: 'userCenter',
+        component: PageView,
+        redirect: '/userCenter/center',
+        meta: { title: '个人中心', icon: 'user', keepAlive: true, permission: [ 'user' ] },
+        children: [
+          {
+            path: '/userCenter/center/:pageNo([1-9]\\d*)?',
+            name: 'Center',
+            hideChildrenInMenu: true,
+            component: () => import('@/views/userCenter/Center'),
+            meta: { title: '我的组件', keepAlive: true, permission: [ 'user' ] }
+          }
+        ]
+      },
+
+
       // dashboard
       {
         path: '/dashboard',

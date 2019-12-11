@@ -98,7 +98,7 @@ export default {
       validatorRules: {},
       url: {
         add: '/Component/user/addUser',
-        edit: '/Component/user/editUser'
+        edit: '/Component/user/updateUser'
       }
     }
   },
@@ -110,23 +110,10 @@ export default {
   methods: {
     initialRoleList() {
       queryall().then(res => {
-        // if(res.success){
+        console.log(res);
         this.roleList = res
-        // }else{
-        //   // console.log(res);
-        // }
-      })
+      });
     },
-    //
-    // loadUserRoles(userid){
-    //   queryUserRole({userid:userid}).then((res)=>{
-    //     if(res.success){
-    //       this.selectedRole = res.result;
-    //     }else{
-    //       console.log(res.message);
-    //     }
-    //   });
-    // },
     add() {
       this.showPasswordBox = true
       this.edit({})
@@ -136,10 +123,6 @@ export default {
 
       let that = this
       that.initialRoleList()
-      // that.initialUserList();
-      // if(record.hasOwnProperty("id")){
-      //   that.loadUserRoles(record.id);
-      // }
       that.userId = record.userId
 
       this.model = Object.assign({}, record)

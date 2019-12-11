@@ -61,21 +61,7 @@ import {httpAction, deleteAction} from '@/api/manage'
 import {JeecgListMixin} from '@/mixins/JeecgListMixin'
 // 表头
 const columns = [
-  // {
-  //   title: '分类名称',
-  //   dataIndex: 'termName'
-  // },
-  // {
-  //   title: '分类类型',
-  //   align: 'center',
-  //   dataIndex: 'level'
-  // },
-  // {
-  //   title: '操作',
-  //   align: 'center',
-  //   dataIndex: 'action',
-  //   scopedSlots: {customRender: 'action'}
-  // }
+
 ]
 export default {
   name: 'ClassifyInfo',   //替代DepartList
@@ -119,25 +105,14 @@ export default {
         nodes: [],
         edges: []
       },
-      // validatorRules: {
-      //   departName: {rules: [{required: true, message: '请输入机构/部门名称!'}]},
-      //   orgCode: {rules: [{required: true, message: '请输入机构编码!'}]},
-      //   mobile: {rules: [{validator: this.validateMobile}]}
-      // },
+
       url: {
-        //queryTerms:'/component/showTerms',
         delete: '/Component/component/deleteTermById',
         edit: '/sys/sysDepart/edit',
-        // deleteBatch: '/sys/sysDepart/deleteBatch',
-        exportXlsUrl: "/Component/component/downCom",    //导出
-        importExcelUrl: "/Component/component/uploadComponent",  //导入
       },
     }
   },
   computed: {
-    // importExcelUrl: function () {
-    //   return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-    // }
   },
   methods: {
     loadData() {

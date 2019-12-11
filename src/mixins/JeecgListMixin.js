@@ -216,15 +216,6 @@ export const JeecgListMixin = {
         }
       });
     },
-    //   deleteAction(that.url.delete, {id: id}).then((res) => {
-    //     if (res.success) {
-    //       that.$message.success(res.message);
-    //       that.loadData();
-    //     } else {
-    //       that.$message.warning(res.message);
-    //     }
-    //   });
-    // },
     handleEdit: function (record) {
       this.$refs.modalForm.edit(record);
       this.$refs.modalForm.title = "编辑";
@@ -237,6 +228,19 @@ export const JeecgListMixin = {
       this.$refs.modalForm.disableSubmit = false;
       this.$refs.modalForm.showPasswordBox = true;
     },
+    // handleAddCom: function (formData) {
+    //   this.$refs.modalForm.saveFile(formData);
+    //   this.$refs.modalForm.title = "新增";
+    //   this.$refs.modalForm.disableSubmit = false;
+    //   this.$refs.modalForm.showPasswordBox = true;
+    // },
+    // handleUpload: function () {
+    //   this.$refs.modalForm.uploadUrl();
+    //   this.$refs.modalForm.title = "上传组件";
+    //   this.$refs.modalForm.disableSubmit = false;
+    //   this.$refs.modalForm.showPasswordBox = true;
+    //
+    // },
     handleUpdatePassword: function (record) {
       this.$refs.modalForm.updatePassword(record);
       this.$refs.modalForm.title = "修改密码";
@@ -300,37 +304,23 @@ export const JeecgListMixin = {
       })
     },
 
-    // handleExport(fileName){
-    //   if(!fileName || typeof fileName != "string"){
-    //     fileName = "导出文件"
-    //   }
-    //   var param = this.getQueryParams();//查询条件
-    //   console.log("导出参数",param)
-    //   downFile(this.url.export,param).then((data)=>{
-    //     if (typeof window.navigator.msSaveBlob !== 'undefined') {
-    //       window.navigator.msSaveBlob(new Blob([data]), fileName)
-    //     }else{
-    //       let url = window.URL.createObjectURL(new Blob([data]))
-    //       let link = document.createElement('a')
-    //       link.style.display = 'none'
-    //       link.href = url
-    //       // link.setAttribute('download', fileName+'.xls')
-    //       link.setAttribute('download', fileName)
-    //       document.body.appendChild(link)
-    //       link.click()
-    //       document.body.removeChild(link); //下载完成移除元素
-    //       window.URL.revokeObjectURL(url); //释放掉blob对象
-    //     }
-    //   })
-    // },
-
-    /* 图片预览 */
-    getImgView(text) {
-      if (text && text.indexOf(",") > 0) {
-        text = text.substring(0, text.indexOf(","))
+    /* 导入 */
+    handleImportExcel(info){
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
       }
-      return window._CONFIG['imgDomainURL'] + "/" + text
+      if (info.file.status === 'done') {
+        if(info.file.response.success){
+          this.$message.success(`${info.file.name} 文件上传成功`);
+          this.loadData();
+        } else {
+          this.$message.error(`${info.file.name} ${info.file.response.message}.`);
+        }
+      } else if (info.file.status === 'error') {
+        this.$message.error(`文件上传失败: ${info.file.msg} `);
+      }
     },
+
     /* 文件下载 */
     uploadFile(text) {
       if (!text) {

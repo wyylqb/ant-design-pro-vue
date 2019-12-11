@@ -103,11 +103,6 @@ export default {
           align: 'center',
           dataIndex: 'userName'
         },
-        // {
-        //   title: '用户角色',
-        //   align: 'center',
-        //   dataIndex: 'roles'
-        // },
         {
           title: '创建时间',
           align: 'center',

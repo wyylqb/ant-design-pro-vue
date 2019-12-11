@@ -34,7 +34,7 @@
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
         @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
-          <a icon="download" @click="handleExport('组件')">导出</a>
+          <a icon="download" @click="handleExport('组件')">下载</a>
           <!--<a-dropdown>-->
             <!--<a class="ant-dropdown-link">-->
               <!--更多 <a-icon type="down"/>-->

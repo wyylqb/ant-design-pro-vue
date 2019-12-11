@@ -13,7 +13,7 @@ const queryall = (params)=>getAction("/Component/user/showAllRoles",params);
 
 //用户管理
 const addUser = (params)=>postAction("/Component/user/addUser",params);
-const editUser = (params)=>putAction("/Component/user/editUser",params);
+const editUser = (params)=>putAction("/Component/user/updateUser",params);
 const queryUserRole = (params)=>getAction("/users/user/queryUserRole",params);
 const getUserList = (params)=>getAction("/users/user/list",params);
 const queryInsider=(params)=>getAction("/users/user/queryByFid")
@@ -36,7 +36,9 @@ const queryPermissionRule = (params)=>getAction("/sys/permission/queryPermission
 
 //分类管理
 const queryTerms = (params)=>getAction("/Component/component/showTerms",params);
+const queryTerm = (params)=>getAction("/Component/component/showTerms1",params);
 const deleteByTermId = (params)=>getAction("/Component/component/deleteTermById",params);
+const uploadComponent = (params)=>postAction("/Component/component/uploadComponent",params);
 
 
 // 部门管理
@@ -90,6 +92,8 @@ export {
   queryall,
   frozenBatch,
   queryTerms,
+  queryTerm,
+  uploadComponent,
   deleteByTermId,
   getPermissionList,
   addPermission,
