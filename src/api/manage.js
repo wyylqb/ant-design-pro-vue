@@ -46,6 +46,17 @@ export function postAction(url, parameter) {
   })
 }
 
+export function postActionup(url, parameter) {
+  return axios({
+    url: url,
+    method: 'post',
+    data: parameter,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
 export function httpAction(url,parameter,method) {
   return axios({
     url: url,
@@ -67,6 +78,7 @@ export function downFile(url,parameter){
   return axios({
     url:url,
     method:'post',
+    responseType: 'blob',
     data:parameter
   })
 }

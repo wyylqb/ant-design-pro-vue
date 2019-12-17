@@ -80,12 +80,7 @@ export const JeecgListMixin = {
           const timestamp = this.dataSource[i].createTime;
           this.dataSource[i].createTime = this.$moment(timestamp).format('YYYY-MM-DD hh:mm:ss');
         }
-
         this.ipagination.total = res.length;
-        //   }
-        // if(res.code===510){
-        //   this.$message.warning(res.message)
-        // }
         this.loading = false;
       })
 
@@ -228,19 +223,6 @@ export const JeecgListMixin = {
       this.$refs.modalForm.disableSubmit = false;
       this.$refs.modalForm.showPasswordBox = true;
     },
-    // handleAddCom: function (formData) {
-    //   this.$refs.modalForm.saveFile(formData);
-    //   this.$refs.modalForm.title = "新增";
-    //   this.$refs.modalForm.disableSubmit = false;
-    //   this.$refs.modalForm.showPasswordBox = true;
-    // },
-    // handleUpload: function () {
-    //   this.$refs.modalForm.uploadUrl();
-    //   this.$refs.modalForm.title = "上传组件";
-    //   this.$refs.modalForm.disableSubmit = false;
-    //   this.$refs.modalForm.showPasswordBox = true;
-    //
-    // },
     handleUpdatePassword: function (record) {
       this.$refs.modalForm.updatePassword(record);
       this.$refs.modalForm.title = "修改密码";
@@ -272,38 +254,35 @@ export const JeecgListMixin = {
     },
 
     /* 导出 */
-    handleExportXls2(){
-      let paramsStr = encodeURI(JSON.stringify(this.getQueryParams()));
-      let url = `${window._CONFIG['domianURL']}/${this.url.exportXlsUrl}?paramsStr=${paramsStr}`;
-      window.location.href = url;
-    },
+    // handleExportXls2(){
+    //   let paramsStr = encodeURI(JSON.stringify(this.getQueryParams()));
+    //   let url = `${window._CONFIG['domianURL']}/${this.url.exportXlsUrl}?paramsStr=${paramsStr}`;
+    //   window.location.href = url;
+    // },
 
     handleExportXls(fileName){
       if(!fileName || typeof fileName != "string"){
         fileName = "导出文件"
       }
       var param = this.getQueryParams();//查询条件
-      console.log("导出参数",param)
       downFile(this.url.exportUrl,param).then((data)=>{
-        console.log(data);
         if (typeof window.navigator.msSaveBlob !== 'undefined') {
           window.navigator.msSaveBlob(new Blob([data]), fileName)
         }else{
-          console.log("wwww");
-          let url = window.URL.createObjectURL(new Blob([data]))
-          let link = document.createElement('a')
-          link.style.display = 'none'
-          link.href = url
+          // let url = window.URL.createObjectURL(data);
+          let url = window.URL.createObjectURL(new Blob([data]));
+          let link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = url;
           // link.setAttribute('download', fileName+'.xls')
-          link.setAttribute('download', fileName)
-          document.body.appendChild(link)
-          link.click()
+          link.setAttribute('download', fileName);
+          document.body.appendChild(link);
+          link.click();
           document.body.removeChild(link); //下载完成移除元素
           window.URL.revokeObjectURL(url); //释放掉blob对象
         }
       })
     },
-
     /* 导入 */
     handleImportExcel(info){
       if (info.file.status !== 'uploading') {

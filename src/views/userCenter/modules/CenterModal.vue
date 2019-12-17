@@ -46,7 +46,7 @@
           <a-input placeholder="" v-decorator="['upfile', {}]" type="file"/>
         </a-form-item>
         <a-form-item>
-          <a-input  type="text" id="md5Value" name="md5Value" style="display:none"/>
+          <a-input  v-decorator="['md5Value', {}]" style="display:none"/>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -55,11 +55,10 @@
 
 <script>
 // import { httpAction } from '@/api/manage'
-import { getAction } from '@/api/manage'
+// import { getAction } from '@/api/manage'
 import {queryTerm, uploadComponent} from '@/api/api';
 import pick from 'lodash.pick'
 import moment from "moment"
-
 
 export default {
   name: "CenterModal",
@@ -109,7 +108,7 @@ export default {
       this.model = Object.assign({}, record);
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model,'termName','keyWord','desInfo'))
+        this.form.setFieldsValue(pick(this.model,'comName','keyWord','desInfo'))
         //时间格式化
       });
 
@@ -130,14 +129,25 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           that.confirmLoading = true;
-
           let formData = Object.assign(this.model, values);
-          // console.log("qq");
-          // console.log(formData);
           formData.terms = this.selectedTerm.length>0?this.selectedTerm.join(","):'';
+          formData.md5Value=this.$md5(formData.upfile);   //计算md5值
           //时间格式化
+          // let form = new FormData();
+          // Object.keys(formData).forEach((key) => {
+          //   form.append(key, formData[key]);
+          // });
+          var form = new window.FormData();
+          form.append("comName", formData.comName);
+          form.append("keyWord", formData.keyWord);
+          form.append("desInfo", formData.desInfo);
+          form.append('upfile', document.querySelector('input[type=file]').files[0]);
+          form.append("terms", formData.terms);
+          form.append("md5Value", formData.md5Value);
+          // console.log("pp");
+          // console.log(form);
           let obj;
-          obj=uploadComponent(formData);
+          obj=uploadComponent(form);
           obj.then((res)=>{
             if(res.success){
               that.$message.success(res.message);

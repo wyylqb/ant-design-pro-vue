@@ -34,23 +34,14 @@
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
         @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
-          <a icon="download" @click="handleExport('组件')">下载</a>
-          <!--<a-dropdown>-->
-            <!--<a class="ant-dropdown-link">-->
-              <!--更多 <a-icon type="down"/>-->
-            <!--</a>-->
-            <!--<a-menu slot="overlay">-->
-              <!--<a-menu-item>-->
-                <!--<a href="javascript:;" @click="handleDetail(record)">详情</a>-->
-              <!--</a-menu-item>-->
-              <!--<a-menu-item>-->
-                <!--<a-popconfirm title="确定要删除吗?" @confirm="() => handleDelete(record.comId)">-->
-                  <!--<a>删除</a>-->
-                <!--</a-popconfirm>-->
-              <!--</a-menu-item>-->
-            <!--</a-menu>-->
-          <!--</a-dropdown>-->
+        <!--<span slot="action" slot-scope="text, record">-->
+          <!--<a icon="download" @click="handleExport('组件')">下载</a>-->
+          <a-button type="primary" icon="download" @click="handleExport('组件')">导出</a-button>
         </span>
+
+        <!--<div class="table-operator">-->
+          <!--<a-button type="primary" icon="download" @click="handleExportXls('日志')">导出</a-button>-->
+        <!--</div>-->
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -176,8 +167,10 @@ export default {
         fileName = "导出文件"
       }
       var param =this.selectionRows[0];
-      console.log("导出参数", param)
+      // console.log("wwww");
+      // console.log("导出参数", param.comId);
       downFile(this.url.export, param).then((data) => {
+        console.log(data);
         if (typeof window.navigator.msSaveBlob !== 'undefined') {
           window.navigator.msSaveBlob(new Blob([data]), fileName)
         } else {

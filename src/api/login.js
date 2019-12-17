@@ -21,7 +21,7 @@ export function login (parameter) {
 }
 // export function login (parameter) {
 //   return axios({
-//     url: '/user/login',
+//     url: '/Component/user/login',
 //     method: 'post',
 //     data: parameter
 //   })

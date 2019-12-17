@@ -1,4 +1,4 @@
-import { getAction,deleteAction,putAction,postAction} from '@/api/manage'
+import { getAction,deleteAction,putAction,postAction,postActionup} from '@/api/manage'
 
 
 //角色管理
