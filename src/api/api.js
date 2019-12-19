@@ -2,14 +2,15 @@ import { getAction,deleteAction,putAction,postAction,postActionup} from '@/api/m
 
 
 //角色管理
-const addRole = (params)=>postAction("/sys/role/add",params);
-const editRole = (params)=>putAction("/sys/role/edit",params);
+const addRole = (params)=>postAction("/Component/user/addRole",params);
+const editRole = (params)=>putAction("/Component/user/updateRole",params);
 // const getRoleList = (params)=>getAction("/sys/role/list",params);
 // const deleteRole = (params)=>deleteAction("/sys/role/delete",params);
 // const deleteRoleList = (params)=>deleteAction("/sys/role/deleteBatch",params);
 const checkRoleCode = (params)=>getAction("/sys/role/checkRoleCode",params);
 //const queryall = (params)=>getAction("/sys/role/queryall",params);
 const queryall = (params)=>getAction("/Component/user/showAllRoles",params);
+const queryallMenus = (params)=>getAction("/Component/user/showAllMenus",params);
 
 //用户管理
 const addUser = (params)=>postAction("/Component/user/addUser",params);
@@ -80,7 +81,7 @@ const queryUserRoleMap = (params)=>getAction("/sys/user/queryUserRoleMap",params
 const duplicateCheck = (params)=>getAction("/sys/duplicate/check",params);
 
 export {
-    addRole,
+  addRole,
   editRole,
   checkRoleCode,
   addUser,
@@ -90,6 +91,7 @@ export {
   getUserList,
   queryInsider,
   queryall,
+  queryallMenus,
   frozenBatch,
   queryTerms,
   queryTerm,
@@ -126,7 +128,7 @@ export {
   queryUserRoleMap,
   duplicateCheck,
   queryTreeListForRole,
-}
+};
 
 
 

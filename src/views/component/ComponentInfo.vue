@@ -39,16 +39,12 @@
           <a-button type="primary" icon="download" @click="handleExport('组件')">导出</a-button>
         </span>
 
-        <!--<div class="table-operator">-->
-          <!--<a-button type="primary" icon="download" @click="handleExportXls('日志')">导出</a-button>-->
-        <!--</div>-->
       </a-table>
     </div>
     <!-- table区域-end -->
 
     <!-- 表单区域 -->
     <component-modal ref="modalForm" @ok="modalFormOk"></component-modal>
-    <!--<Select-User-Modal ref="selectUserModal" @selectFinished="selectOK"></Select-User-Modal>-->
   </a-card>
 </template>
 
@@ -174,15 +170,14 @@ export default {
         if (typeof window.navigator.msSaveBlob !== 'undefined') {
           window.navigator.msSaveBlob(new Blob([data]), fileName)
         } else {
-          console.log("wwww");
           let url = window.URL.createObjectURL(new Blob([data]));
-          let link = document.createElement('a')
-          link.style.display = 'none'
-          link.href = url
+          let link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = url;
           // link.setAttribute('download', fileName+'.xls')
-          link.setAttribute('download', fileName+'.zip')
-          document.body.appendChild(link)
-          link.click()
+          link.setAttribute('download', fileName);
+          document.body.appendChild(link);
+          link.click();
           document.body.removeChild(link); //下载完成移除元素
           window.URL.revokeObjectURL(url); //释放掉blob对象
         }

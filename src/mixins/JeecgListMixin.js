@@ -211,6 +211,21 @@ export const JeecgListMixin = {
         }
       });
     },
+    handleDeletes: function (id) {
+      if (!this.url.delete) {
+        this.$message.error("请设置url.delete属性!")
+        return
+      }
+      var that = this;
+      postAction(that.url.delete, { roleId: id }).then((res) => {
+        if (res >= 1) {
+          that.$message.success("success");
+          that.loadData();
+        } else {
+          that.$message.error("error");
+        }
+      });
+    },
     handleEdit: function (record) {
       this.$refs.modalForm.edit(record);
       this.$refs.modalForm.title = "编辑";

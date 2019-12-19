@@ -82,6 +82,13 @@ export function downFile(url,parameter){
     data:parameter
   })
 }
+// export function downFiles(url,parameter){
+//   return axios({
+//     url:url,
+//     method:'post',
+//     data:parameter
+//   })
+// }
 
 export function getUserList (parameter) {
   return axios({

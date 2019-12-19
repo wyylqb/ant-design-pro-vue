@@ -119,21 +119,18 @@ export default {
       this.edit({})
     },
     edit(record) {
-      this.form.resetFields()
-
-      let that = this
-      that.initialRoleList()
-      that.userId = record.userId
-
-      this.model = Object.assign({}, record)
-
+      this.form.resetFields();
+      let that = this;
+      that.initialRoleList();
+      that.userId = record.userId;
+      this.model = Object.assign({}, record);
       if (JSON.stringify(record) != '{}') {
         //把时间戳转为时间
-        this.model.createTime = this.$moment(record.createTime)
+        this.model.createTime = this.$moment(record.createTime);
 
         //下拉框中选中的用户角色
         for (let i = 0; i < this.model.roles.length; i++) {
-          const element = this.model.roles[i]
+          const element = this.model.roles[i];
           this.selectedRole.push(element.roleId)
         }
       }
@@ -149,33 +146,30 @@ export default {
       this.edit(record)
     },
     close() {
-      this.$emit('close')
-      this.visible = false
-      this.disableSubmit = false
-      this.selectedRole = []
-      this.showPasswordBox = false
+      this.$emit('close');
+      this.visible = false;
+      this.disableSubmit = false;
+      this.selectedRole = [];
+      this.showPasswordBox = false;
       this.showDatePicker = false
     },
     moment,
     handleSubmit() {
       if (this.disableSubmit) {
-        this.close()
+        this.close();
         return
       }
-      const that = this
+      const that = this;
       // 触发表单验证
       this.form.validateFields((err, values) => {
         if (!err) {
-          that.confirmLoading = true
+          that.confirmLoading = true;
           //收集表单数据
-          let formData = {}
+          let formData = {};
 
-          formData.userName = values.userName
-
-          console.log(formData)
-
+          formData.userName = values.userName;
+          console.log(formData);
           //时间格式化
-
           let obj
           if (!this.model.userId) {
             formData.password = values.password //新增用户

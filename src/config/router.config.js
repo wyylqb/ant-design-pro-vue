@@ -30,6 +30,25 @@ export const asyncRouterMap = [
           }
         ]
       },
+
+      // role
+      {
+        path: '/roles',
+        name: 'roles',
+        component: PageView,
+        redirect: '/roles/roleInfo',
+        meta: { title: '角色管理', icon: 'team', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/roles/roleInfo/:pageNo([1-9]\\d*)?',
+            name: 'RoleInfo',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/roles/RoleInfo'),
+            meta: { title: '角色信息', keepAlive: true, permission: [ 'table' ] }
+          }
+        ]
+      },
+
       // component
       {
         path: '/component',
