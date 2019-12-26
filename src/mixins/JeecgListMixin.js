@@ -195,7 +195,7 @@ export const JeecgListMixin = {
       this.queryParam = {}
       this.loadData(1);
     },
-
+    //删除用户
     handleDelete: function (id) {
       if (!this.url.delete) {
         this.$message.error("请设置url.delete属性!")
@@ -211,6 +211,7 @@ export const JeecgListMixin = {
         }
       });
     },
+    // 删除角色
     handleDeletes: function (id) {
       if (!this.url.delete) {
         this.$message.error("请设置url.delete属性!")

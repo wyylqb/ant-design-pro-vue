@@ -110,12 +110,12 @@ export default {
   methods: {
     initialRoleList() {
       queryall().then(res => {
-        console.log(res);
+        // console.log(res);
         this.roleList = res
       });
     },
     add() {
-      this.showPasswordBox = true
+      this.showPasswordBox = true;
       this.edit({})
     },
     edit(record) {

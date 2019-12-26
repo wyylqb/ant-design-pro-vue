@@ -12,7 +12,7 @@ import './mock'
 
 import bootstrap from './core/bootstrap'
 import './core/use'
-// import './permission' // permission control
+import './permission' // permission control
 import './utils/filter' // global filter
 import moment from "vue-moment"
 import VueCookies from 'vue-cookies'
@@ -21,7 +21,7 @@ import md5 from 'js-md5'
 Vue.prototype.$md5 = md5;
 axios.defaults.withCredentials=true;//让ajax携带cookie
 
-Vue.use(VueCookies)//cookie
+Vue.use(VueCookies); //cookie
 
 Vue.config.productionTip = false
 

@@ -125,6 +125,7 @@ export default {
             loginParams.password = values.password;
             console.log(loginParams);
             that.Login(loginParams).then((res) => {
+              console.log("aaa");
               this.loginSuccess(res);
             }).catch((err) => {
               that.requestFailed(err);
@@ -137,10 +138,11 @@ export default {
     },
 
     loginSuccess (res) {
-      console.log(res)
-      // this.$router.push({ name: "account-center" });
-      this.$router.push({ path: '/' });
+      // console.log(res);   //undefined
+      // this.$router.push({ name: "dashboard" });
+      this.$router.push({ path: '/dashboard/analysis' });
       // 延迟 1 秒显示欢迎信息
+      console.log("aaa");
       setTimeout(() => {
         this.$notification.success({
           message: '欢迎',

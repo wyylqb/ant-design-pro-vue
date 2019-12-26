@@ -28,26 +28,10 @@
       >
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
           <a-divider type="vertical" />
-
-          <a-dropdown>
-            <a class="ant-dropdown-link">
-              更多
-              <a-icon type="down" />
-            </a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-menu-item>
-                  <a href="javascript:;" @click="handleDetail(record)">详情</a>
-                </a-menu-item>
-                <!--<a href="javascript:;" @click="handlePassword(record)">密码</a>-->
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDeletes(record.roleId)">
+          <a-popconfirm title="确定删除吗?" @confirm="() => handleDeletes(record.roleId)">
                   <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          </a-popconfirm>
         </span>
       </a-table>
     </div>
@@ -90,34 +74,16 @@ export default {
       url: {
         list: '/Component/user/showAllRoles',
         delete: '/Component/user/deleteRole',
-        query: '/Component/user/showUserByUserName',
         add: '/Component/user/addUser',
         edit: '/Component/user/updateUser',
-        // password: '/Component/user/updatePassword'
       },
       showModelWindow: false
     }
   },
   computed: {
-    importExcelUrl: function() {
-      return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
-    }
+
   },
   methods: {
-    handleQueryByName() {
-      if (typeof this.queryParam.roleName == 'undefined' || this.queryParam.roleName == '') {
-        this.$info({
-          title: '提示',
-          content: '角色名不能为空'
-        })
-      } else {
-        this.searchQuery()
-      }
-    },
-    handlePassword(record) {
-      console.log('修改密码')
-      this.handleUpdatePassword(record)
-    }
   }
 }
 </script>
