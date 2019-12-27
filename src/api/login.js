@@ -35,13 +35,14 @@ export function getSmsCaptcha (parameter) {
   })
 }
 
-export function getInfo () {
+export function getInfo (token) {
   return axios({
-    url: '/user/info',
-    method: 'get',
+    url: '/Component/user/getMenuByToken',
+    method: 'post',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
-    }
+    },
+    data:token
   })
 }
 

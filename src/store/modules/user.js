@@ -10,7 +10,7 @@ const user = {
     welcome: '',
     avatar: '',
     roles: [],
-    info: {}
+    info: {},
   },
 
   mutations: {
@@ -29,7 +29,7 @@ const user = {
     },
     SET_INFO: (state, info) => {
       state.info = info
-    }
+    },
   },
 
   actions: {
@@ -42,6 +42,11 @@ const user = {
           const result = response;
           Vue.ls.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000);
           commit('SET_TOKEN', result.token);
+          commit('SET_INFO', result)
+          commit('SET_NAME', {name:result.user.userName});
+          commit('SET_ROLES',result.currentUserRole);
+          commit('SET_AVATAR', '/avatar2.jpg');
+          console.log(result.user.userName)
           resolve();
         }).catch(error => {
           reject(error)
@@ -52,7 +57,18 @@ const user = {
     // 获取用户信息
     GetInfo ({ commit }) {
       return new Promise((resolve, reject) => {
-        getInfo().then(response => {
+        const token = Vue.ls.get(ACCESS_TOKEN);
+        console.log('token',token);
+        const params={token:token};
+        getInfo(params).then(response => {
+          console.log('获取用户权限信息',response);
+          let permission=[];
+          for (let i = 0; i < response.length; i++) {
+            const element = response[i].menuName;
+            permission.push(element);
+          }
+          commit('SET_ROLES', permission)
+          /*
           const result = response.result;
 
           if (result.role && result.role.permissions.length > 0) {
@@ -65,6 +81,7 @@ const user = {
               }
             })
             role.permissionList = role.permissions.map(permission => { return permission.permissionId })
+            console.log('获取用户信息',result)
             commit('SET_ROLES', result.role)
             commit('SET_INFO', result)
           } else {
@@ -73,8 +90,8 @@ const user = {
 
           commit('SET_NAME', { name: result.name, welcome: welcome() })
           commit('SET_AVATAR', result.avatar)
-
-          resolve(response)
+*/
+          resolve(permission)
         }).catch(error => {
           reject(error)
         })

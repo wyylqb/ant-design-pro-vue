@@ -18,20 +18,25 @@ router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
   if (Vue.ls.get(ACCESS_TOKEN)) {
     /* has token */
+    console.log('token已存在')
     if (to.path === '/user/login') {
       // next({ path: '/dashboard/analysis' });
       next({ path: defaultRoutePath });
       NProgress.done()
     } else {
-      if (store.getters.roles.length === 0) {
+      console.log(store)
+      if (store.getters.addRouters.length === 0) {
         store
           .dispatch('GetInfo')
           .then(res => {
-            const roles = res.result && res.result.role;
-            store.dispatch('GenerateRoutes', { roles }).then(() => {
+            const permissionList = res;
+            console.log('权限列表',permissionList)
+            store.dispatch('GenerateRoutes', {permissionList}).then(() => {
               // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表
+              console.log(33333)
               router.addRoutes(store.getters.addRouters)
+              console.log(store.getters.addRouters)
               const redirect = decodeURIComponent(from.query.redirect || to.path)
               if (to.path === redirect) {
                 // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record

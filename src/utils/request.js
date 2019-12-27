@@ -30,6 +30,7 @@ const err = (error) => {
         store.dispatch('Logout').then(() => {
           setTimeout(() => {
             window.location.reload()
+
           }, 1500)
         })
       }
