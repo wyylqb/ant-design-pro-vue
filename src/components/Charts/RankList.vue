@@ -3,9 +3,12 @@
     <h4 class="title">{{ title }}</h4>
     <ul class="list">
       <li :key="index" v-for="(item, index) in list">
+        <div style="font-size:20px;">
         <span :class="index < 3 ? 'active' : null">{{ index + 1 }}</span>
         <span>{{ item.name }}</span>
+        <span>{{ item.version }}</span>
         <span>{{ item.total }}</span>
+        </div>
       </li>
     </ul>
   </div>

@@ -142,10 +142,11 @@ export default {
       // this.$router.push({ name: "dashboard" });
       this.$router.push({ path: '/dashboard/analysis' });
       // 延迟 1 秒显示欢迎信息
-      console.log("aaa");
+      const name=this.$store.getters.nickname;
+      console.log(this.$store.getters.nickname);
       setTimeout(() => {
         this.$notification.success({
-          message: '欢迎',
+          message: name,
           description: `${timeFix()}，欢迎回来`
         })
       }, 1000);

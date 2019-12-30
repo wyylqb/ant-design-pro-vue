@@ -67,6 +67,8 @@ const user = {
             const element = response[i].menuName;
             permission.push(element);
           }
+          permission.push('user');
+          permission.push('roles');
           commit('SET_ROLES', permission)
           /*
           const result = response.result;

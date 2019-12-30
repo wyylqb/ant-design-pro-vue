@@ -2,22 +2,22 @@
   <div class="page-header-index-wide">
     <a-row :gutter="24">
       <!--<a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">-->
-        <!--<chart-card :loading="loading" title="总销售额" total="￥126,560">-->
-          <!--<a-tooltip title="指标说明" slot="action">-->
-            <!--<a-icon type="info-circle-o" />-->
-          <!--</a-tooltip>-->
-          <!--<div>-->
-            <!--<trend flag="up" style="margin-right: 16px;">-->
-              <!--<span slot="term">周同比</span>-->
-              <!--12%-->
-            <!--</trend>-->
-            <!--<trend flag="down">-->
-              <!--<span slot="term">日同比</span>-->
-              <!--11%-->
-            <!--</trend>-->
-          <!--</div>-->
-          <!--<template slot="footer">日均销售额<span>￥ 234.56</span></template>-->
-        <!--</chart-card>-->
+      <!--<chart-card :loading="loading" title="总销售额" total="￥126,560">-->
+      <!--<a-tooltip title="指标说明" slot="action">-->
+      <!--<a-icon type="info-circle-o" />-->
+      <!--</a-tooltip>-->
+      <!--<div>-->
+      <!--<trend flag="up" style="margin-right: 16px;">-->
+      <!--<span slot="term">周同比</span>-->
+      <!--12%-->
+      <!--</trend>-->
+      <!--<trend flag="down">-->
+      <!--<span slot="term">日同比</span>-->
+      <!--11%-->
+      <!--</trend>-->
+      <!--</div>-->
+      <!--<template slot="footer">日均销售额<span>￥ 234.56</span></template>-->
+      <!--</chart-card>-->
       <!--</a-col>-->
       <!--<a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">-->
       <a-col :style="{ marginBottom: '24px' }">
@@ -28,18 +28,25 @@
           <div>
             <mini-area />
           </div>
-          <template slot="footer">日访问量<span> {{ '1234' | NumberFormat }}</span></template>
+          <template slot="footer">
+            日访问量
+            <span>{{ '1234' | NumberFormat }}</span>
+          </template>
         </chart-card>
       </a-col>
     </a-row>
 
     <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
       <div class="salesCard">
-        <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
+        <a-tabs
+          default-active-key="1"
+          size="large"
+          :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}"
+        >
           <a-tab-pane tab="组件下载排行榜" key="2">
             <a-row>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="" :list="rankList"/>
+                <rank-list title :list="rankList" />
               </a-col>
             </a-row>
           </a-tab-pane>
@@ -47,17 +54,26 @@
       </div>
     </a-card>
 
-    <div class="antd-pro-pages-dashboard-analysis-twoColLayout" :class="isDesktop() ? 'desktop' : ''">
+    <div
+      class="antd-pro-pages-dashboard-analysis-twoColLayout"
+      :class="isDesktop() ? 'desktop' : ''"
+    >
       <a-row :gutter="24" type="flex" :style="{ marginTop: '24px' }">
         <a-col :lg="24" :xs="24">
-          <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="组件下载分类占比" :style="{ height: '100%' }">
+          <a-card
+            class="antd-pro-pages-dashboard-analysis-salesCard"
+            :loading="loading"
+            :bordered="false"
+            title="组件下载分类占比"
+            :style="{ height: '100%' }"
+          >
             <h4>下载量</h4>
             <div>
               <div>
                 <v-chart :force-fit="true" :height="405" :data="pieData" :scale="pieScale">
-                  <v-tooltip :showTitle="false" dataKey="item*percent" />
+                  <v-tooltip :showTitle="false" data-key="item*percent" />
                   <v-axis />
-                  <v-legend dataKey="item"/>
+                  <v-legend data-key="item" />
                   <v-pie position="percent" color="item" :vStyle="pieStyle" />
                   <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
                 </v-chart>
@@ -72,7 +88,18 @@
 
 <script>
 import moment from 'moment'
-import { ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, Trend, NumberInfo, MiniSmoothArea } from '@/components'
+import { getAction } from '@/api/manage'
+import {
+  ChartCard,
+  MiniArea,
+  MiniBar,
+  MiniProgress,
+  RankList,
+  Bar,
+  Trend,
+  NumberInfo,
+  MiniSmoothArea
+} from '@/components'
 import { mixinDevice } from '@/utils/mixin'
 
 const barData = []
@@ -88,19 +115,12 @@ for (let i = 0; i < 12; i += 1) {
   })
 }
 
-//组件下载排行榜
-const rankList = [];
-for (let i = 0; i < 7; i++) {
-  rankList.push({
-    name: '白鹭岛 ' + (i + 1) + ' 号店',
-    total: 1234.56 - i * 100
-  })
-}
-
 const searchUserData = []
 for (let i = 0; i < 7; i++) {
   searchUserData.push({
-    x: moment().add(i, 'days').format('YYYY-MM-DD'),
+    x: moment()
+      .add(i, 'days')
+      .format('YYYY-MM-DD'),
     y: Math.ceil(Math.random() * 10)
   })
 }
@@ -114,7 +134,8 @@ const searchUserScale = [
     alias: '用户数',
     min: 0,
     max: 10
-  }]
+  }
+]
 
 const searchTableColumns = [
   {
@@ -160,11 +181,13 @@ const sourceData = [
   { item: '其他', count: 7.8 }
 ]
 
-const pieScale = [{
-  dataKey: 'percent',
-  min: 0,
-  formatter: '.0%'
-}]
+const pieScale = [
+  {
+    dataKey: 'percent',
+    min: 0,
+    formatter: '.0%'
+  }
+]
 
 const dv = new DataSet.View().source(sourceData)
 dv.transform({
@@ -173,7 +196,7 @@ dv.transform({
   dimension: 'item',
   as: 'percent'
 })
-const pieData = dv.rows;
+const pieData = dv.rows
 
 export default {
   name: 'Analysis',
@@ -189,10 +212,10 @@ export default {
     NumberInfo,
     MiniSmoothArea
   },
-  data () {
+  data() {
     return {
       loading: true,
-      rankList,
+      rankList:[],
 
       // 搜索用户数
       searchUserData,
@@ -213,7 +236,18 @@ export default {
       }
     }
   },
-  created () {
+  created() {
+    getAction('/Component/component/showAllComs').then(res => {
+      console.log(res)
+      //组件下载排行榜
+      for (let i = 0; i < res.length; i++) {
+        this.rankList.push({
+          name: res[i].keyWord,
+          total: res[i].downTimes,
+          version: res[i].version
+        })
+      }
+    })
     setTimeout(() => {
       this.loading = !this.loading
     }, 1000)
@@ -222,46 +256,46 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .extra-wrapper {
-    line-height: 55px;
-    padding-right: 24px;
+.extra-wrapper {
+  line-height: 55px;
+  padding-right: 24px;
 
-    .extra-item {
-      display: inline-block;
-      margin-right: 24px;
+  .extra-item {
+    display: inline-block;
+    margin-right: 24px;
 
-      a {
-        margin-left: 24px;
-      }
+    a {
+      margin-left: 24px;
     }
   }
+}
 
-  .antd-pro-pages-dashboard-analysis-twoColLayout {
+.antd-pro-pages-dashboard-analysis-twoColLayout {
+  position: relative;
+  display: flex;
+  display: block;
+  flex-flow: row wrap;
+}
+
+.antd-pro-pages-dashboard-analysis-salesCard {
+  height: calc(100% - 24px);
+  /deep/ .ant-card-head {
     position: relative;
-    display: flex;
-    display: block;
-    flex-flow: row wrap;
   }
+}
 
-  .antd-pro-pages-dashboard-analysis-salesCard {
-    height: calc(100% - 24px);
-    /deep/ .ant-card-head {
-      position: relative;
-    }
+.dashboard-analysis-iconGroup {
+  i {
+    margin-left: 16px;
+    color: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    transition: color 0.32s;
+    color: black;
   }
-
-  .dashboard-analysis-iconGroup {
-    i {
-      margin-left: 16px;
-      color: rgba(0,0,0,.45);
-      cursor: pointer;
-      transition: color .32s;
-      color: black;
-    }
-  }
-  .analysis-salesTypeRadio {
-    position: absolute;
-    right: 54px;
-    bottom: 12px;
-  }
+}
+.analysis-salesTypeRadio {
+  position: absolute;
+  right: 54px;
+  bottom: 12px;
+}
 </style>
