@@ -162,7 +162,6 @@ export default {
           console.log('finished loading')
           this.md5 = spark.end()
           console.log(this.md5)
-          console.info('computed hash', spark.end()) // compute hash
 
           var form = new window.FormData()
           form.append('comName', formData.comName)
