@@ -41,7 +41,6 @@
         <a-form-item>
           <a-input v-decorator="['md5Value', {}]" style="display:none" />
         </a-form-item>
-        <div id="box" style="display:none" ></div>
       </a-form>
     </a-spin>
   </a-modal>
@@ -61,6 +60,7 @@ export default {
     return {
       title: '操作',
       visible: false,
+      md5: '',
       model: {},
       termList: [], //下拉列表的值
       selectedTerm: [],
@@ -120,26 +120,58 @@ export default {
         if (!err) {
           console.log('表单验证')
           that.confirmLoading = true
-          let formData = Object.assign(this.model, values)
-          formData.terms = this.selectedTerm.length > 0 ? this.selectedTerm.join(',') : ''
-          formData.upfile = document.querySelector('input[type=file]').files[0]
 
-          console.log(formData.upfile, typeof formData.upfile)
-          this.calculate()
           //formData.md5Value = this.$md5(formData.upfile) //计算md5值
           //时间格式化
           // let form = new FormData();
           // Object.keys(formData).forEach((key) => {
           //   form.append(key, formData[key]);
           // });
+          this.computeMD5(values)
+        }
+      })
+    },
+    handleCancel() {
+      this.close()
+    },
+    computeMD5(values) {
+      var fileReader = new FileReader()
+      let blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice
+      let file = document.querySelector('input[type=file]').files[0]
+      let chunkSize = 2097152
+      // read in chunks of 2MB
+      let chunks = Math.ceil(file.size / chunkSize)
+      let currentChunk = 0
+      let spark = new SparkMD5()
+
+      const that = this
+      let formData = Object.assign(this.model, values)
+      formData.terms = this.selectedTerm.length > 0 ? this.selectedTerm.join(',') : ''
+      formData.upfile = document.querySelector('input[type=file]').files[0]
+
+      console.log(formData.upfile, typeof formData.upfile)
+
+      fileReader.onload = function(e) {
+        console.log('read chunk nr', currentChunk + 1, 'of', chunks)
+        spark.appendBinary(e.target.result) // append binary string
+        currentChunk++
+
+        if (currentChunk < chunks) {
+          loadNext()
+        } else {
+          console.log('finished loading')
+          this.md5 = spark.end()
+          console.log(this.md5)
+          console.info('computed hash', spark.end()) // compute hash
+
           var form = new window.FormData()
           form.append('comName', formData.comName)
           form.append('keyWord', formData.keyWord)
           form.append('desInfo', formData.desInfo)
           form.append('upfile', formData.upfile)
           form.append('terms', formData.terms)
-          console.log('文件md5',document.getElementById('box').innerText)
-          form.append('md5Value', document.getElementById('box').innerText)
+          console.log('文件md5', this.md5)
+          form.append('md5Value', this.md5)
           let obj
           obj = uploadComponent(form)
           obj
@@ -155,35 +187,6 @@ export default {
               that.confirmLoading = false
               that.close()
             })
-        }
-      })
-    },
-    handleCancel() {
-      this.close()
-    },
-    calculate() {
-      var fileReader = new FileReader()
-      let box = document.getElementById('box')
-      let blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice
-      let file = document.querySelector('input[type=file]').files[0]
-      let chunkSize = 2097152
-      // read in chunks of 2MB
-      let chunks = Math.ceil(file.size / chunkSize)
-      let currentChunk = 0
-      let spark = new SparkMD5()
-
-      fileReader.onload = function(e) {
-        console.log('read chunk nr', currentChunk + 1, 'of', chunks)
-        spark.appendBinary(e.target.result) // append binary string
-        currentChunk++
-
-        if (currentChunk < chunks) {
-          loadNext()
-        } else {
-          console.log('finished loading')
-          box.innerText = spark.end()
-          console.log('MD5',box.innerText)
-          console.info('computed hash', spark.end()) // compute hash
         }
       }
 
