@@ -3,11 +3,11 @@
     <h4 class="title">{{ title }}</h4>
     <ul class="list">
       <li :key="index" v-for="(item, index) in list">
-        <div style="font-size:20px;">
-        <span :class="index < 3 ? 'active' : null">{{ index + 1 }}</span>
-        <span>{{ item.name }}</span>
-        <span>{{ item.version }}</span>
-        <span>{{ item.total }}</span>
+        <div style="font-size:20px;width:800px">
+          <span :class="index < 3 ? 'active' : null">{{ index + 1 }}</span>
+          <span>{{ item.name}}</span>
+          <span>{{ item.version }}</span>
+          <span>{{ item.total }}</span>
         </div>
       </li>
     </ul>
@@ -48,6 +48,7 @@ export default {
           color: rgba(0, 0, 0, .65);
           font-size: 14px;
           line-height: 22px;
+          margin-right: 50px;
 
           &:first-child {
             background-color: #f5f5f5;
@@ -66,7 +67,7 @@ export default {
             color: #fff;
           }
           &:last-child {
-            float: right;
+            /*float: right;*/
           }
         }
       }

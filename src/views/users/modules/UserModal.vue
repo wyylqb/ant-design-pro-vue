@@ -96,10 +96,10 @@ export default {
       confirmLoading: false,
       form: this.$form.createForm(this),
       validatorRules: {},
-      url: {
-        add: '/Component/user/addUser',
-        edit: '/Component/user/updateUser'
-      }
+      // url: {
+      //   add: '/Component/user/addUser',
+      //   edit: '/Component/user/updateUser'
+      // }
     }
   },
   created() {

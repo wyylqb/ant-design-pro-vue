@@ -40,6 +40,7 @@ const queryTerms = (params)=>getAction("/Component/component/showTerms",params);
 const queryTerm = (params)=>getAction("/Component/component/showTerms1",params);
 const deleteByTermId = (params)=>getAction("/Component/component/deleteTermById",params);
 const uploadComponent = (params)=>postAction("/Component/component/uploadComponent",params);
+const downComTimes = (params)=>getAction("/Component/component/showAllComs",params);
 
 
 // 部门管理
@@ -96,6 +97,7 @@ export {
   queryTerms,
   queryTerm,
   uploadComponent,
+  downComTimes,
   deleteByTermId,
   getPermissionList,
   addPermission,

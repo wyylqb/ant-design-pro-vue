@@ -53,7 +53,6 @@ import { queryTerm, uploadComponent } from '@/api/api'
 import pick from 'lodash.pick'
 import moment from 'moment'
 import SparkMD5 from 'spark-md5'
-
 export default {
   name: 'CenterModal',
   data() {
@@ -188,14 +187,11 @@ export default {
             })
         }
       }
-
       function loadNext() {
         var start = currentChunk * chunkSize,
           end = start + chunkSize >= file.size ? file.size : start + chunkSize
-
         fileReader.readAsBinaryString(blobSlice.call(file, start, end))
       }
-
       loadNext()
     }
   }

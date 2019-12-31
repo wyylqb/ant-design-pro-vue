@@ -18,13 +18,13 @@ router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
   if (Vue.ls.get(ACCESS_TOKEN)) {
     /* has token */
-    console.log('token已存在')
+    console.log('token已存在');
     if (to.path === '/user/login') {
       // next({ path: '/dashboard/analysis' });
       next({ path: defaultRoutePath });
       NProgress.done()
     } else {
-      console.log(store)
+      console.log(store);
       if (store.getters.addRouters.length === 0) {
         store
           .dispatch('GetInfo')
@@ -34,10 +34,10 @@ router.beforeEach((to, from, next) => {
             store.dispatch('GenerateRoutes', {permissionList}).then(() => {
               // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表
-              console.log(33333)
-              router.addRoutes(store.getters.addRouters)
-              console.log(store.getters.addRouters)
-              const redirect = decodeURIComponent(from.query.redirect || to.path)
+              console.log(33333);
+              router.addRoutes(store.getters.addRouters);
+              console.log(store.getters.addRouters);
+              const redirect = decodeURIComponent(from.query.redirect || to.path);
               if (to.path === redirect) {
                 // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
                 next({ ...to, replace: true })
@@ -53,7 +53,8 @@ router.beforeEach((to, from, next) => {
               description: '请求用户信息失败，请重试'
             })
             store.dispatch('Logout').then(() => {
-              next({ path: '/user/login', query: { redirect: to.fullPath } })
+              next({ path: '/user/login'})
+              // next({ path: '/user/login', query: { redirect: to.fullPath } })
             })
           })
       } else {

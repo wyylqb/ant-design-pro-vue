@@ -138,8 +138,6 @@ export default {
     },
 
     loginSuccess (res) {
-      // console.log(res);   //undefined
-      // this.$router.push({ name: "dashboard" });
       this.$router.push({ path: '/dashboard/analysis' });
       // 延迟 1 秒显示欢迎信息
       const name=this.$store.getters.nickname;
