@@ -84,6 +84,13 @@ const user = {
           resolve()
         }).catch(() => {
           resolve()
+        }).finally(() => {
+          commit('SET_TOKEN', '');
+          commit('SET_ROLES', []);
+          commit('SET_ROUTER', []);
+          Vue.ls.remove(ACCESS_TOKEN);
+          localStorage.clear();
+          window.open('/user/login','_self');
         })
       })
     }
