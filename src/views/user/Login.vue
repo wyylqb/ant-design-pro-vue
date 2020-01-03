@@ -117,7 +117,7 @@ export default {
       };
       that.loginBtn = true;
       // 使用账户密码登陆
-      if (that.customActiveKey === 'tab1') {
+      // if (that.customActiveKey === 'tab1') {
         // const loginParams = { ...values };
         that.form.validateFields([ 'userName', 'password'], { force: true }, (err, values) => {
           if (!err) {
@@ -129,12 +129,13 @@ export default {
               this.loginSuccess(res);
             }).catch((err) => {
               that.requestFailed(err);
+              that.loginBtn = false;
             });
           }else {
             that.loginBtn = false;
           }
         })
-      }
+      // }
     },
 
     loginSuccess (res) {
