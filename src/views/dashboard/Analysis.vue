@@ -220,13 +220,14 @@ export default {
   },
   created() {
     getAction('/Component/component/showAllComs').then(res => {
-      console.log(res);
+      // console.log(res);
       //组件下载排行榜
       for (let i = 0; i < res.length; i++) {
         this.rankList.push({
-          name: res[i].keyWord,
+          name: res[i].comParent.parName,
+          // name: res[i].keyWord,
           total: res[i].downTimes,
-          version: res[i].version
+          version: "v"+res[i].version
         })
       }
     })

@@ -46,7 +46,7 @@ const user = {
           commit('SET_NAME', {name:result.user.userName});
           commit('SET_ROLES',result.currentUserRole);
           // commit('SET_AVATAR', '/avatar2.jpg');
-          console.log(result.user.userName)
+          console.log(result.user.userName);
           resolve();
         }).catch(error => {
           reject(error)
@@ -67,8 +67,8 @@ const user = {
             const element = response[i].menuName;
             permission.push(element);
           }
-          permission.push('user');
-          permission.push('roles');
+          // permission.push('user');
+          // permission.push('roles');
           commit('SET_ROLES', permission);
           resolve(permission)
         }).catch(error => {
@@ -84,10 +84,6 @@ const user = {
           resolve()
         }).catch(() => {
           resolve()
-        }).finally(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          Vue.ls.remove(ACCESS_TOKEN)
         })
       })
     }

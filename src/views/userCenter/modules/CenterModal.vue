@@ -150,7 +150,7 @@ export default {
 
       console.log(formData.upfile, typeof formData.upfile)
 
-      fileReader.onload = function(e) {
+      fileReader.onload = function (e) {
         console.log('read chunk nr', currentChunk + 1, 'of', chunks)
         spark.appendBinary(e.target.result) // append binary string
         currentChunk++
@@ -174,24 +174,26 @@ export default {
           obj = uploadComponent(form)
           obj
             .then(res => {
-              if (res.success) {
-                that.$message.success(res.message)
+              if (res>0) {
+                that.$message.success("上传成功");
                 that.$emit('ok')
               } else {
-                that.$message.warning(res.message)
+                that.$message.warning("上传失败");
               }
             })
             .finally(() => {
-              that.confirmLoading = false
+              that.confirmLoading = false;
               that.close()
             })
         }
       }
+
       function loadNext() {
         var start = currentChunk * chunkSize,
           end = start + chunkSize >= file.size ? file.size : start + chunkSize
         fileReader.readAsBinaryString(blobSlice.call(file, start, end))
       }
+
       loadNext()
     }
   }

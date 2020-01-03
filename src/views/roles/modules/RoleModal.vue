@@ -27,7 +27,7 @@
               v-for="(menu,menuindex) in menuList"
               :key="menuindex.toString()"
               :value="menu.menuId"
-            >{{ menu.menuName }}</a-select-option>
+            >{{ menu.title }}</a-select-option>
           </a-select>
         </a-form-item>
       </a-form>

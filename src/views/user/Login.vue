@@ -123,9 +123,9 @@ export default {
           if (!err) {
             loginParams.userName = values.userName;
             loginParams.password = values.password;
-            console.log(loginParams);
+            // console.log(loginParams);
             that.Login(loginParams).then((res) => {
-              console.log("aaa");
+              // console.log("aaa");
               this.loginSuccess(res);
             }).catch((err) => {
               that.requestFailed(err);
@@ -141,14 +141,14 @@ export default {
       this.$router.push({ path: '/dashboard/analysis' });
       // 延迟 1 秒显示欢迎信息
       const name=this.$store.getters.nickname;
-      console.log(this.$store.getters.nickname);
+      // console.log(this.$store.getters.nickname);
       setTimeout(() => {
         this.$notification.success({
           message: name,
           description: `${timeFix()}，欢迎回来`
         })
       }, 1000);
-      this.isLoginError = false
+      this.isLoginError = false;
     },
     requestFailed (err) {
       console.log(err);

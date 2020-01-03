@@ -9,10 +9,8 @@ export const asyncRouterMap = [
     name: 'index',
     component: BasicLayout,
     meta: { title: '首页' },
-    //redirect: '/dashboard/analysis',
-    //redirect: '/users/userInfo',
+    redirect: '/dashboard/analysis',
     children: [
-
       // dashboard
       {
         path: '/dashboard',
@@ -88,15 +86,33 @@ export const asyncRouterMap = [
             component: () => import('@/views/component/ComponentList'),
             meta: { title: '组件信息', keepAlive: true, permission: ['component'] }
           },
+          // {
+          //   path: '/component/componentAudit/:pageNo([1-9]\\d*)?',
+          //   name: 'ComponentAudit',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/component/ComponentAudit'),
+          //   meta: { title: '组件审核', keepAlive: true, permission: ['component'] }
+          // }
+        ]
+      },
+      //组件审核
+      {
+        path: '/com',
+        name: 'com',
+        component: PageView,
+        redirect: '/com/componentAudit',
+        meta: { title: '组件审核', icon: 'form', permission: ['com'] },
+        children: [
           {
-            path: '/component/componentAudit/:pageNo([1-9]\\d*)?',
+            path: '/com/componentAudit/:pageNo([1-9]\\d*)?',
             name: 'ComponentAudit',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/component/ComponentAudit'),
-            meta: { title: '组件审核', keepAlive: true, permission: ['component'] }
+            component: () => import('@/views/com/ComponentAudit'),
+            meta: { title: '审核信息', keepAlive: true, permission: ['com'] }
           }
         ]
       },
+
       // log
       {
         path: '/log',

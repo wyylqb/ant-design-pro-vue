@@ -136,14 +136,14 @@
             //时间格式化
             console.log(formData)
             httpAction(this.url.add,formData,"post").then((res)=>{
-            //  if(res.success){
+              if(res>0){
                 that.$message.success("添加成功");
                 // that.$message.success(res.message);
                 that.loadTreeData();
                 that.$emit('ok');
-              // }else{
-              //   that.$message.warning(res.message);
-              // }
+              }else{
+                that.$message.warning("添加失败");
+              }
             }).finally(() => {
               that.confirmLoading = false;
               that.close();

@@ -20,8 +20,8 @@ router.beforeEach((to, from, next) => {
     /* has token */
     console.log('token已存在');
     if (to.path === '/user/login') {
-      // next({ path: '/dashboard/analysis' });
-      next({ path: defaultRoutePath });
+      next({ path: '/dashboard/analysis' });
+      // next({ path: defaultRoutePath });
       NProgress.done()
     } else {
       console.log(store);
@@ -30,11 +30,11 @@ router.beforeEach((to, from, next) => {
           .dispatch('GetInfo')
           .then(res => {
             const permissionList = res;
-            console.log('权限列表',permissionList)
+            console.log('权限列表',permissionList);
             store.dispatch('GenerateRoutes', {permissionList}).then(() => {
               // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表
-              console.log(33333);
+              // console.log(33333);
               router.addRoutes(store.getters.addRouters);
               console.log(store.getters.addRouters);
               const redirect = decodeURIComponent(from.query.redirect || to.path);

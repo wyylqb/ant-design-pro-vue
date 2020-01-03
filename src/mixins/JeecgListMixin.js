@@ -79,6 +79,12 @@ export const JeecgListMixin = {
         for (let i = 0; i < this.dataSource.length; i++) {
           const timestamp = this.dataSource[i].createTime;
           this.dataSource[i].createTime = this.$moment(timestamp).format('YYYY-MM-DD hh:mm:ss');
+          const states = this.dataSource[i].state;
+          if(states==0)
+            this.dataSource[i].state="未审核";
+          else if(states==1)
+            this.dataSource[i].state="审核成功";
+          else this.dataSource[i].state = "审核失败";
         }
         this.ipagination.total = res.length;
         this.loading = false;

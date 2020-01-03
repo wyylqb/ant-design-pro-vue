@@ -43,17 +43,17 @@ export default {
         {
           title: '名称',
           align: 'center',
-          dataIndex: 'createTime'
+          dataIndex: 'comName'
         },
         {
           title: '上传时间',
           align: 'center',
-          dataIndex: 'message'
+          dataIndex: 'createTime'
         },
         {
           title: '审核状态',
           align: 'center',
-          dataIndex: 'message'
+          dataIndex: 'state'
         },
       ],
       url: {
