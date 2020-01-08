@@ -47,8 +47,6 @@
 </template>
 
 <script>
-// import { httpAction } from '@/api/manage'
-// import { getAction } from '@/api/manage'
 import { queryTerm, uploadComponent } from '@/api/api'
 import pick from 'lodash.pick'
 import moment from 'moment'
@@ -93,39 +91,31 @@ export default {
     },
 
     edit(record) {
-      this.form.resetFields()
-      let that = this
-      that.initialTermList()
+      this.form.resetFields();
+      let that = this;
+      that.initialTermList();
       // that.userId = record.id;
-      this.model = Object.assign({}, record)
-      this.visible = true
+      this.model = Object.assign({}, record);
+      this.visible = true;
       this.$nextTick(() => {
         this.form.setFieldsValue(pick(this.model, 'comName', 'keyWord', 'desInfo'))
         //时间格式化
       })
     },
     close() {
-      this.$emit('close')
-      this.visible = false
+      this.$emit('close');
+      this.visible = false;
 
-      this.disableSubmit = false
+      this.disableSubmit = false;
       this.selectedTerm = []
     },
     moment,
     handleSubmit() {
-      const that = this
+      const that = this;
       // 触发表单验证
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log('表单验证')
-          that.confirmLoading = true
-
-          //formData.md5Value = this.$md5(formData.upfile) //计算md5值
-          //时间格式化
-          // let form = new FormData();
-          // Object.keys(formData).forEach((key) => {
-          //   form.append(key, formData[key]);
-          // });
+          that.confirmLoading = true;
           this.computeMD5(values)
         }
       })
@@ -134,42 +124,34 @@ export default {
       this.close()
     },
     computeMD5(values) {
-      var fileReader = new FileReader()
-      let blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice
-      let file = document.querySelector('input[type=file]').files[0]
-      let chunkSize = 2097152
+      var fileReader = new FileReader();
+      let blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;
+      let file = document.querySelector('input[type=file]').files[0];
+      let chunkSize = 2097152;
       // read in chunks of 2MB
-      let chunks = Math.ceil(file.size / chunkSize)
-      let currentChunk = 0
-      let spark = new SparkMD5()
+      let chunks = Math.ceil(file.size / chunkSize);
+      let currentChunk = 0;
+      let spark = new SparkMD5();
 
       const that = this
-      let formData = Object.assign(this.model, values)
+      let formData = Object.assign(this.model, values);
       formData.terms = this.selectedTerm.length > 0 ? this.selectedTerm.join(',') : ''
-      formData.upfile = document.querySelector('input[type=file]').files[0]
-
-      console.log(formData.upfile, typeof formData.upfile)
-
+      formData.upfile = document.querySelector('input[type=file]').files[0];
       fileReader.onload = function (e) {
-        console.log('read chunk nr', currentChunk + 1, 'of', chunks)
-        spark.appendBinary(e.target.result) // append binary string
-        currentChunk++
+        spark.appendBinary(e.target.result); // append binary string
+        currentChunk++;
 
         if (currentChunk < chunks) {
           loadNext()
         } else {
-          console.log('finished loading')
-          this.md5 = spark.end()
-          console.log(this.md5)
-
-          var form = new window.FormData()
-          form.append('comName', formData.comName)
-          form.append('keyWord', formData.keyWord)
-          form.append('desInfo', formData.desInfo)
-          form.append('upfile', formData.upfile)
-          form.append('terms', formData.terms)
-          console.log('文件md5', this.md5)
-          form.append('md5Value', this.md5)
+          this.md5 = spark.end();
+          var form = new window.FormData();
+          form.append('comName', formData.comName);
+          form.append('keyWord', formData.keyWord);
+          form.append('desInfo', formData.desInfo);
+          form.append('upfile', formData.upfile);
+          form.append('terms', formData.terms);
+          form.append('md5Value', this.md5);
           let obj
           obj = uploadComponent(form)
           obj

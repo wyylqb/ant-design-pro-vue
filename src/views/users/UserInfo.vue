@@ -61,9 +61,6 @@
             </a>
             <a-menu slot="overlay">
               <a-menu-item>
-                <a-menu-item>
-                  <a href="javascript:;" @click="handleDetail(record)">详情</a>
-                </a-menu-item>
                 <a href="javascript:;" @click="handlePassword(record)">密码</a>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.userId)">
                   <a>删除</a>
@@ -95,7 +92,6 @@ export default {
   },
   data() {
     return {
-      //  description: '用户模块管理页面',
       // 表头
       columns: [
         {

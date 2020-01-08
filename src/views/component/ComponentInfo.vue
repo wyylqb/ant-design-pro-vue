@@ -34,9 +34,7 @@
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
         @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
-        <!--<span slot="action" slot-scope="text, record">-->
-          <!--<a icon="download" @click="handleExport('组件')">下载</a>-->
-          <a-button type="primary" icon="download" @click="handleExport('组件')">导出</a-button>
+          <a-button type="primary" icon="download" @click="handleExport('组件')">下载</a-button>
         </span>
 
       </a-table>
@@ -51,7 +49,6 @@
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin'
 import {getAction, postAction, downFile,deleteAction} from '@/api/manage'
-// import SelectUserModal from './SelectUserModal'
 import ComponentModal from './modules/ComponentModal'
 
 export default {
@@ -63,9 +60,6 @@ export default {
   },
   data() {
     return {
-      // description: '组件信息',
-      // currentTermId: '',
-      // 表头
       columns: [
         {
           title: '名称',
@@ -93,6 +87,11 @@ export default {
           dataIndex: 'desInfo'
         },
         {
+          title: '接口信息',
+          align: "center",
+          dataIndex: 'comParent.interfaceInfo'
+        },
+        {
           title: '操作',
           dataIndex: 'action',
           scopedSlots: {customRender: 'action'},
@@ -103,7 +102,7 @@ export default {
         list: "/Component/component/showComsByTerm ",      //查询某分类下有哪些组件
         search:`/Component/component/comSearch`,     //根据关键字查询组件
         edit: "/sys/user/editSysDepartWithUser", //编辑某分类下的某些组件
-        delete: "/Component/component/deleteCom",
+        // delete: "/Component/component/deleteCom",
         deleteBatch: "/sys/user/deleteUserInDepartBatch",
         export:`Component/component/downCom`
       }
@@ -124,49 +123,19 @@ export default {
       }
       if (this.currentTermId === '') return;
       var params = this.getQueryParams();//查询条件
-      // console.log(params);
       var currentTermIds = sessionStorage.getItem('termId');
-      // params.termId = "78c010cb-1ba3-479b-b02e-b2679ee7bc16";
       params.termId = currentTermIds;
       postAction(this.url.list, params).then((res) => {
-        // console.log("1111");
-        //  console.log(res);
-        // if (res.success) {
           this.dataSource = res;
           this.ipagination.total = res.total;
-        // }
       })
-    },
-    handleDelete: function (id) {
-      if (!this.url.delete) {
-        this.$message.error("请设置url.delete属性!")
-        return
-      }
-      var that = this;
-      deleteAction(that.url.delete, {comId: id}).then((res) => {
-        console.log("www");
-        console.log(res);
-          that.$message.success("删除成功！");
-          if (this.selectedRowKeys.length>0){
-            for(let i =0; i<this.selectedRowKeys.length;i++){
-              if (this.selectedRowKeys[i] == id){
-                this.selectedRowKeys.splice(i,1);
-                break;
-              }
-            }
-          }
-          that.loadData();
-      });
     },
     handleExport(fileName) {
       if (!fileName || typeof fileName != "string") {
         fileName = "导出文件"
       }
       var param =this.selectionRows[0];
-      // console.log("wwww");
-      // console.log("导出参数", param.comId);
       downFile(this.url.export, param).then((data) => {
-        console.log(data);
         if (typeof window.navigator.msSaveBlob !== 'undefined') {
           window.navigator.msSaveBlob(new Blob([data]), fileName)
         } else {
@@ -174,7 +143,6 @@ export default {
           let link = document.createElement('a');
           link.style.display = 'none';
           link.href = url;
-          // link.setAttribute('download', fileName+'.xls')
           link.setAttribute('download', fileName+'.zip');
           document.body.appendChild(link);
           link.click();
@@ -184,34 +152,9 @@ export default {
       })
     },
     open(record) {
-      //console.log(record);
       this.currentTermId = record.id;
       this.loadData(1);
     },
-    clearList() {
-      this.currentTermId = '';
-      this.dataSource = [];
-    },
-    hasSelectTerm() {
-      if (this.currentTermId == null) {
-        this.$message.error("请选择一个部门!")
-        return false;
-      }
-      return true;
-    },
-    handleAddUserDepart() {
-      if (this.currentTermId == '') {
-        this.$message.error("请选择一个部门!")
-      } else {
-      //  this.$refs.selectUserModal.visible = true;
-      }
-    },
-    // handleEdit: function (record) {
-    //   this.$refs.modalForm.title = "编辑";
-    //   this.$refs.modalForm.departDisabled = true;
-    //   this.$refs.modalForm.disableSubmit = false;
-    //   this.$refs.modalForm.edit(record);
-    // },
     handleAdd: function () {
       if (this.currentTermId == '') {
         this.$message.error("请选择一个部门!")

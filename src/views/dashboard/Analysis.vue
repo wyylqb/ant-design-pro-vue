@@ -1,24 +1,7 @@
 <template>
   <div class="page-header-index-wide">
-    <!--<a-row :gutter="24">-->
-      <!--<a-col :style="{ marginBottom: '24px' }">-->
-        <!--<chart-card :loading="loading" title="访问量" :total="8846 | NumberFormat">-->
-          <!--<a-tooltip title="指标说明" slot="action">-->
-            <!--<a-icon type="info-circle-o" />-->
-          <!--</a-tooltip>-->
-          <!--<div>-->
-            <!--<mini-area />-->
-          <!--</div>-->
-          <!--<template slot="footer">-->
-            <!--日访问量-->
-            <!--<span>{{ '1234' | NumberFormat }}</span>-->
-          <!--</template>-->
-        <!--</chart-card>-->
-      <!--</a-col>-->
-    <!--</a-row>-->
 
     <a-card :bordered="false" :body-style="{padding: '0'}">
-    <!--<a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">-->
       <div class="salesCard">
         <a-tabs
           default-active-key="1"
@@ -36,35 +19,6 @@
       </div>
     </a-card>
 
-    <!--<div-->
-      <!--class="antd-pro-pages-dashboard-analysis-twoColLayout"-->
-      <!--:class="isDesktop() ? 'desktop' : ''"-->
-    <!--&gt;-->
-      <!--<a-row :gutter="24" type="flex" :style="{ marginTop: '24px' }">-->
-        <!--<a-col :lg="24" :xs="24">-->
-          <!--<a-card-->
-            <!--class="antd-pro-pages-dashboard-analysis-salesCard"-->
-            <!--:loading="loading"-->
-            <!--:bordered="false"-->
-            <!--title="组件下载分类占比"-->
-            <!--:style="{ height: '100%' }"-->
-          <!--&gt;-->
-            <!--<h4>下载量</h4>-->
-            <!--<div>-->
-              <!--<div>-->
-                <!--<v-chart :force-fit="true" :height="405" :data="pieData" :scale="pieScale">-->
-                  <!--<v-tooltip :showTitle="false" data-key="item*percent" />-->
-                  <!--<v-axis />-->
-                  <!--<v-legend data-key="item" />-->
-                  <!--<v-pie position="percent" color="item" :vStyle="pieStyle" />-->
-                  <!--<v-coord type="theta" :radius="0.75" :innerRadius="0.6" />-->
-                <!--</v-chart>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</a-card>-->
-        <!--</a-col>-->
-      <!--</a-row>-->
-    <!--</div>-->
   </div>
 </template>
 
@@ -84,102 +38,6 @@ import {
 } from '@/components'
 import { mixinDevice } from '@/utils/mixin'
 
-// const barData = []
-// const barData2 = []
-// for (let i = 0; i < 12; i += 1) {
-//   barData.push({
-//     x: `${i + 1}月`,
-//     y: Math.floor(Math.random() * 1000) + 200
-//   })
-//   barData2.push({
-//     x: `${i + 1}月`,
-//     y: Math.floor(Math.random() * 1000) + 200
-//   })
-// }
-//
-// const searchUserData = []
-// for (let i = 0; i < 7; i++) {
-//   searchUserData.push({
-//     x: moment()
-//       .add(i, 'days')
-//       .format('YYYY-MM-DD'),
-//     y: Math.ceil(Math.random() * 10)
-//   })
-// }
-// const searchUserScale = [
-//   {
-//     dataKey: 'x',
-//     alias: '时间'
-//   },
-//   {
-//     dataKey: 'y',
-//     alias: '用户数',
-//     min: 0,
-//     max: 10
-//   }
-// ]
-
-// const searchTableColumns = [
-//   {
-//     dataIndex: 'index',
-//     title: '排名',
-//     width: 90
-//   },
-//   {
-//     dataIndex: 'keyword',
-//     title: '搜索关键词'
-//   },
-//   {
-//     dataIndex: 'count',
-//     title: '用户数'
-//   },
-//   {
-//     dataIndex: 'range',
-//     title: '周涨幅',
-//     align: 'right',
-//     sorter: (a, b) => a.range - b.range,
-//     scopedSlots: { customRender: 'range' }
-//   }
-// ]
-// const searchData = []
-// for (let i = 0; i < 50; i += 1) {
-//   searchData.push({
-//     index: i + 1,
-//     keyword: `搜索关键词-${i}`,
-//     count: Math.floor(Math.random() * 1000),
-//     range: Math.floor(Math.random() * 100),
-//     status: Math.floor((Math.random() * 10) % 2)
-//   })
-// }
-//
-// const DataSet = require('@antv/data-set')
-//
-// const sourceData = [
-//   { item: '家用电器', count: 32.2 },
-//   { item: '食用酒水', count: 21 },
-//   { item: '个护健康', count: 17 },
-//   { item: '服饰箱包', count: 13 },
-//   { item: '母婴产品', count: 9 },
-//   { item: '其他', count: 7.8 }
-// ]
-//
-// const pieScale = [
-//   {
-//     dataKey: 'percent',
-//     min: 0,
-//     formatter: '.0%'
-//   }
-// ]
-
-// const dv = new DataSet.View().source(sourceData)
-// dv.transform({
-//   type: 'percent',
-//   field: 'count',
-//   dimension: 'item',
-//   as: 'percent'
-// })
-// const pieData = dv.rows
-
 export default {
   name: 'Analysis',
   mixins: [mixinDevice],
@@ -198,34 +56,14 @@ export default {
     return {
       loading: true,
       rankList:[],
-
-      //// 搜索用户数
-      // searchUserData,
-      // searchUserScale,
-      // searchTableColumns,
-      // searchData,
-
-      // barData,
-      // barData2,
-
-      //
-      // pieScale,
-      // pieData,
-      // sourceData,
-      // pieStyle: {
-      //   stroke: '#fff',
-      //   lineWidth: 1
-      // }
     }
   },
   created() {
     getAction('/Component/component/showAllComs').then(res => {
-      // console.log(res);
       //组件下载排行榜
       for (let i = 0; i < res.length; i++) {
         this.rankList.push({
           name: res[i].comParent.parName,
-          // name: res[i].keyWord,
           total: res[i].downTimes,
           version: "v"+res[i].version
         })

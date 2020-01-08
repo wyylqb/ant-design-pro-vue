@@ -80,35 +80,28 @@ export const asyncRouterMap = [
             meta: { title: '分类信息', keepAlive: true, permission: ['component'] }
           },
           {
-            path: '/component/componentList/:pageNo([1-9]\\d*)?',
-            name: 'ComponentList',
+            path: '/component/componentAudit/:pageNo([1-9]\\d*)?',
+            name: 'ComponentAudit',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/component/ComponentList'),
-            meta: { title: '组件信息', keepAlive: true, permission: ['component'] }
-          },
-          // {
-          //   path: '/component/componentAudit/:pageNo([1-9]\\d*)?',
-          //   name: 'ComponentAudit',
-          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-          //   component: () => import('@/views/component/ComponentAudit'),
-          //   meta: { title: '组件审核', keepAlive: true, permission: ['component'] }
-          // }
+            component: () => import('@/views/component/ComponentAudit'),
+            meta: { title: '组件审核', keepAlive: true, permission: ['component'] }
+          }
         ]
       },
-      //组件审核
+      //组件下载
       {
         path: '/com',
         name: 'com',
         component: PageView,
-        redirect: '/com/componentAudit',
-        meta: { title: '组件审核', icon: 'form', permission: ['com'] },
+        redirect: '/com/componentList',
+        meta: { title: '组件下载', icon: 'form', permission: ['com'] },
         children: [
           {
-            path: '/com/componentAudit/:pageNo([1-9]\\d*)?',
-            name: 'ComponentAudit',
+            path: '/com/componentList/:pageNo([1-9]\\d*)?',
+            name: 'ComponentList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/com/ComponentAudit'),
-            meta: { title: '审核信息', keepAlive: true, permission: ['com'] }
+            component: () => import('@/views/com/ComponentList'),
+            meta: { title: '组件下载', keepAlive: true, permission: ['com'] }
           }
         ]
       },

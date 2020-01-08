@@ -210,10 +210,10 @@ export const JeecgListMixin = {
       var that = this;
       postAction(that.url.delete, { userId: id }).then((res) => {
         if (res.state >= 1) {
-          that.$message.success(res.msg);
+          that.$message.success("success");
           that.loadData();
         } else {
-          that.$message.error(res.msg);
+          that.$message.error("error");
         }
       });
     },
@@ -274,13 +274,6 @@ export const JeecgListMixin = {
       this.$refs.modalForm.disableSubmit = false;
       this.$refs.modalForm.disableSubmit = true;
     },
-
-    /* 导出 */
-    // handleExportXls2(){
-    //   let paramsStr = encodeURI(JSON.stringify(this.getQueryParams()));
-    //   let url = `${window._CONFIG['domianURL']}/${this.url.exportXlsUrl}?paramsStr=${paramsStr}`;
-    //   window.location.href = url;
-    // },
 
     handleExportXls(fileName){
       if(!fileName || typeof fileName != "string"){

@@ -20,7 +20,6 @@
           hasFeedback >
           <a-input id="termName" placeholder="请输入分类名称" v-decorator="['termName', validatorRules.termName ]"/>
         </a-form-item>
-        <!--<a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上级分类" hasFeedback>-->
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" :hidden="seen" label="上级分类" hasFeedback>
         <a-tree-select
           style="width:100%"
@@ -88,25 +87,18 @@
     methods: {
       loadTreeData(){
         var that = this;
-        console.log("aaa");
         queryTerms().then((res)=>{
-          console.log(res);
-        //  if(res.success){
             that.classifyTree = [];
             for (let i = 0; i < res.length; i++) {
               let temp = res[i];
               that.classifyTree.push(temp);
             }
-         // }
-
         })
       },
       add (classify) {
-       // console.log(classify);
         if(classify){
           this.seen = false;
         }else{
-        //  console.log("aa");
           this.seen = true;
         }
          this.edit(classify);
@@ -117,9 +109,6 @@
           this.visible = true;
           this.loadTreeData();
           this.model.parId = record!=null?record.toString():null;
-          // this.$nextTick(() => {
-          //   this.form.setFieldsValue(pick(this.model,'departName','departNameEn','departNameAbbr','departOrder','description','orgType','orgCode','mobile','fax','address','memo','status','delFlag'))
-          // });
       },
       close () {
         this.$emit('close');
@@ -155,14 +144,6 @@
       handleCancel () {
         this.close()
       },
-      // validateMobile(rule,value,callback){
-      //   if (!value || new RegExp(/^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/).test(value)){
-      //     callback();
-      //   }else{
-      //     callback("您的手机号码格式不正确!");
-      //   }
-      //
-      // }
     }
   }
 </script>

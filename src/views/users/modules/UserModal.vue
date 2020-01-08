@@ -37,12 +37,6 @@
           />
         </a-form-item>
 
-        <!--<a-form-item-->
-        <!--:labelCol="labelCol"-->
-        <!--:wrapperCol="wrapperCol"-->
-        <!--label="创建时间">-->
-        <!--<a-input placeholder="请输入创建时间" v-decorator="['createTime', {}]" />-->
-        <!--</a-form-item>-->
 
         <a-form-item label="用户角色" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select
@@ -66,7 +60,6 @@
 </template>
 
 <script>
-// import { httpAction } from '@/api/manage'
 import { getAction } from '@/api/manage'
 import { addUser, editUser, queryUserRole, queryall, updatePwd } from '@/api/api'
 import pick from 'lodash.pick'
@@ -96,21 +89,14 @@ export default {
       confirmLoading: false,
       form: this.$form.createForm(this),
       validatorRules: {},
-      // url: {
-      //   add: '/Component/user/addUser',
-      //   edit: '/Component/user/updateUser'
-      // }
     }
   },
   created() {
-    // const token = Vue.ls.get(ACCESS_TOKEN);
-    // this.headers = {"X-Access-Token":token}
   },
 
   methods: {
     initialRoleList() {
       queryall().then(res => {
-        // console.log(res);
         this.roleList = res
       });
     },
@@ -170,36 +156,35 @@ export default {
           formData.userName = values.userName;
           console.log(formData);
           //时间格式化
-          let obj
+          let obj;
           if (!this.model.userId) {
-            formData.password = values.password //新增用户
-            formData.lists = this.selectedRole
+            formData.password = values.password;//新增用户
+            formData.lists = this.selectedRole;
             obj = addUser(formData)
           } else {
             if (this.showPasswordBox) {
-              formData.userId = this.model.userId
-              formData.password = values.password //修改密码
+              formData.userId = this.model.userId;
+              formData.password = values.password; //修改密码
               obj = updatePwd(formData)
             } else {
-              formData.userId = this.model.userId //编辑权限
-              formData.lists = this.selectedRole
+              formData.userId = this.model.userId; //编辑权限
+              formData.lists = this.selectedRole;
               obj = editUser(formData)
             }
           }
-          obj
-            .then(res => {
+          obj.then(res => {
               if (res.state >= 1) {
-                that.$message.success(res.msg)
+                that.$message.success(res.msg);
                 that.$emit('ok')
               } else {
-                that.$message.error(res.msg)
+                that.$message.error(res.msg);
               }
             })
             .catch(err => {
               that.$message.error("出错了")
             })
             .finally(() => {
-              that.confirmLoading = false
+              that.confirmLoading = false;
               that.close()
             })
         }

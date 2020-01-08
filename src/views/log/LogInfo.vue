@@ -54,7 +54,6 @@
 </template>
 
 <script>
-//import LogModal from './modules/LogModal'
 import { JeecgListMixin } from '@/mixins/JeecgListMixin'
 import JDate from '@/components/jeecg/JDate'
 
@@ -67,7 +66,6 @@ export default {
   },
   data () {
     return {
-      //  description: '用户模块管理页面',
       // 表头
       columns: [
         {
@@ -90,13 +88,9 @@ export default {
     }
   },
   computed: {
-    // importExcelUrl: function () {
-    //   return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
-    // }
   },
   methods: {
     handleQueryByTime() {
-      // console.log(this.queryParam.dateTime1,this.queryParam.dateTime2)
       if ( typeof this.queryParam.dateTime1 == 'undefined' || typeof this.queryParam.dateTime2 == 'undefined') {
         this.$info({
           title: '提示',
@@ -105,23 +99,7 @@ export default {
       } else {
         this.searchQuery()
       }
-    },
-    exportLog() {
-      var dateTime1 = this.queryParam.dateTime1;
-      var dateTime2 = this.queryParam.dateTime2;
-     // return ("http://" + "10.69.36.118" +":8080/Component/log/exportLogs?dateTime1=" + dateTime1 + "&dateTime2=" + dateTime2);
-      // console.log(dateTime1);
-      // console.log(dateTime2);
-       // $("export").attr("href", "http://" + "10.69.36.118" +":8080/Component/log/exportLogs?dateTime1=" + dateTime1 + "&dateTime2=" + dateTime2);
-      if ( typeof dateTime1 == 'undefined' || typeof dateTime2 == 'undefined') {
-        this.$info({
-          title: '提示',
-          content: '查询日期不能为空'
-        })
-      } else {
-        this.export();
-      }
-    },
+    }
   }
 
 }

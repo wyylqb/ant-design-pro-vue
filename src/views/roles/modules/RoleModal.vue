@@ -36,7 +36,6 @@
 </template>
 
 <script>
-// import { httpAction } from '@/api/manage'
 import { getAction } from '@/api/manage'
 import { addRole, editRole, queryUserRole, queryall, updatePwd,queryallMenus } from '@/api/api'
 import pick from 'lodash.pick'
@@ -83,7 +82,6 @@ export default {
       this.edit({})
     },
     edit(record) {
-      // console.log(record);
       this.form.resetFields();
       let that = this;
       that.initialMenuList();
@@ -95,9 +93,6 @@ export default {
         //下拉框中选中的角色权限
         for (let i = 0; i < this.model.menus.length; i++) {
           const element = this.model.menus[i];
-          // console.log("999");
-          // console.log(element);
-          // console.log(element.menuId);
           this.selectedMenu.push(element.menuId);
         }
       }
@@ -139,8 +134,6 @@ export default {
             obj = editRole(formData)
           }
           obj.then(res => {
-            // console.log("1111111");
-            // console.log(res);
               if (res >= 1) {
                 that.$message.success("success");
                 that.$emit('ok')

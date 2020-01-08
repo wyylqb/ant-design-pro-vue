@@ -55,9 +55,14 @@ export default {
           dataIndex: 'desInfo'
         },
         {
+          title: '接口信息',
+          align: 'center',
+          dataIndex: 'comParent.interfaceInfo'
+        },
+        {
           title: '上传者',
           align: 'center',
-          dataIndex: 'user'
+          dataIndex: 'user.userName'
         },
         {
           title: '操作',

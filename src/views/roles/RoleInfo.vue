@@ -56,7 +56,6 @@ export default {
   },
   data() {
     return {
-      //  description: '用户模块管理页面',
       // 表头
       columns: [
         {
