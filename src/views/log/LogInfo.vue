@@ -74,6 +74,16 @@ export default {
           dataIndex: 'createTime'
         },
         {
+          title: '操作人',
+          align: 'center',
+          dataIndex: 'operator'
+        },
+        {
+          title: '操作类型',
+          align: 'center',
+          dataIndex: 'type'
+        },
+        {
           title: '日志内容',
           align: 'center',
           dataIndex: 'message'
